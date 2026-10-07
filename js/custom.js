@@ -409,6 +409,22 @@
 		});
 
 		/* ----------------------------------------------------------- */
+		/*  ON-CLICK: FAQ ACCORDION EXPAND/COLLAPSE
+		/* ----------------------------------------------------------- */
+		$('.faq-accordion-header').on('click', function() {
+			var $item = $(this).closest('.faq-accordion-item');
+			var isActive = $item.hasClass('active');
+
+			// Close all other items
+			$('.faq-accordion-item').removeClass('active');
+
+			// If it wasn't already active, open it
+			if (!isActive) {
+				$item.addClass('active');
+			}
+		});
+
+		/* ----------------------------------------------------------- */
 		/*  ON-SCROLL: TRIGGER D3 CHARTS, PROGRESS BARS & NUMERIC COUNTERS
 		/* ----------------------------------------------------------- */
 		var skillsAnimated = false;

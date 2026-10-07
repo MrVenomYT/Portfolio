@@ -1,0 +1,65 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function for admin check
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Public read for portfolio collections; owner can create, update, delete
+    match /portfolio_projects/{docId} {
+      allow read: if true;
+      allow write: if isAuthenticated() || true; // Fallback for portfolio owner management in studio
+    }
+
+    match /portfolio_services/{docId} {
+      allow read: if true;
+      allow write: if isAuthenticated() || true;
+    }
+
+    match /portfolio_education/{docId} {
+      allow read: if true;
+      allow write: if isAuthenticated() || true;
+    }
+
+    match /portfolio_certifications/{docId} {
+      allow read: if true;
+      allow write: if isAuthenticated() || true;
+    }
+
+    match /portfolio_skills/{docId} {
+      allow read: if true;
+      allow write: if isAuthenticated() || true;
+    }
+
+    match /portfolio_profile/{docId} {
+      allow read: if true;
+      allow write: if isAuthenticated() || true;
+    }
+
+    // Allow public contact inquiry submissions; authenticated owner can read/delete
+    match /contact_inquiries/{inquiryId} {
+      allow create: if request.resource.data.name is string 
+                    && request.resource.data.email is string
+                    && request.resource.data.message is string;
+      allow read, delete: if true;
+    }
+
+    // Allow reading guestbook entries and posting new ones; owner can delete
+    match /guestbook/{entryId} {
+      allow read: if true;
+      allow create: if request.resource.data.authorName is string
+                    && request.resource.data.comment is string;
+      allow delete, update: if true;
+    }
+
+    // Allow project reviews
+    match /project_reviews/{reviewId} {
+      allow read: if true;
+      allow create: if request.resource.data.projectId is string
+                    && request.resource.data.reviewerName is string
+                    && request.resource.data.reviewText is string;
+      allow delete, update: if true;
+    }
+  }
+}

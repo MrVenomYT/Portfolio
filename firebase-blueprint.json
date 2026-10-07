@@ -1,0 +1,78 @@
+{
+  "entities": {
+    "ContactInquiry": {
+      "title": "Contact Inquiry",
+      "description": "Contact form submissions from portfolio visitors",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "subject": { "type": "string" },
+        "message": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["name", "email", "message"]
+    },
+    "GuestbookEntry": {
+      "title": "Guestbook Entry",
+      "description": "Guestbook signatures and endorsements",
+      "type": "object",
+      "properties": {
+        "authorName": { "type": "string" },
+        "authorRole": { "type": "string" },
+        "badge": { "type": "string" },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["authorName", "comment"]
+    },
+    "PortfolioProject": {
+      "title": "Portfolio Project",
+      "description": "Customizable portfolio projects with lifecycle stages",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "categoryLabel": { "type": "string" },
+        "image": { "type": "string" },
+        "description": { "type": "string" },
+        "techs": { "type": "array", "items": { "type": "string" } },
+        "githubUrl": { "type": "string" },
+        "demoUrl": { "type": "string" },
+        "demoLabel": { "type": "string" },
+        "stages": { "type": "array" },
+        "order": { "type": "number" }
+      },
+      "required": ["title", "category", "description"]
+    },
+    "PortfolioService": {
+      "title": "Portfolio Service",
+      "description": "Customizable services offered by Muhammad Hasil",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "icon": { "type": "string" },
+        "description": { "type": "string" },
+        "features": { "type": "array", "items": { "type": "string" } },
+        "techs": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["title", "description"]
+    },
+    "PortfolioProfile": {
+      "title": "Portfolio Profile",
+      "description": "Profile, stats, hero strings, and social links",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "heroSubtitles": { "type": "array", "items": { "type": "string" } },
+        "bio": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "location": { "type": "string" },
+        "experienceYears": { "type": "number" },
+        "completedProjects": { "type": "number" },
+        "happyClients": { "type": "number" }
+      }
+    }
+  }
+}

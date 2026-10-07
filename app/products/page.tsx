@@ -1,7 +1,5 @@
-'use client';
-
-import ProjectsPage from '@/app/projects/page';
+import { redirect } from 'next/navigation';
 
 export default function ProductsPage() {
-  return <ProjectsPage />;
+  redirect('/projects');
 }

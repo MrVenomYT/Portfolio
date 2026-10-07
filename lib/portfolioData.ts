@@ -1,5 +1,20 @@
 import { LifecycleStage } from '@/components/ProjectLifecycleTimeline';
 
+export interface WeeklyCommitStat {
+  week: string;
+  commits: number;
+  locAdded: number;
+}
+
+export interface ProjectStats {
+  linesOfCode: number;
+  totalCommits: number;
+  durationWeeks: number;
+  pullRequests?: number;
+  testCoverage?: string;
+  weeklyCommits: WeeklyCommitStat[];
+}
+
 export interface ProjectItem {
   id: string;
   title: string;
@@ -13,6 +28,7 @@ export interface ProjectItem {
   demoLabel: string;
   stages: LifecycleStage[];
   featured?: boolean;
+  stats?: ProjectStats;
 }
 
 export interface DigitalProduct {

@@ -33,6 +33,7 @@ import {
 } from 'lucide-react';
 import D3RadarChart from '@/components/D3RadarChart';
 import ProjectLifecycleTimeline from '@/components/ProjectLifecycleTimeline';
+import ProjectStatsChart from '@/components/ProjectStatsChart';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { usePortfolio } from '@/lib/portfolioContext';
 import { ProjectItem } from '@/lib/portfolioData';
@@ -147,13 +148,6 @@ export default function HomePage() {
                   className="px-7 py-3.5 rounded-full bg-[#1e1e1e] hover:bg-[#252525] border border-zinc-700 text-zinc-200 hover:text-white font-bold font-poppins text-xs tracking-wider uppercase transition-colors"
                 >
                   Explore Works ({projects.length})
-                </Link>
-                <Link
-                  href="/products"
-                  className="px-6 py-3.5 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-skin font-bold font-poppins text-xs tracking-wider uppercase flex items-center gap-1.5 transition-colors"
-                >
-                  <ShoppingBag className="w-3.5 h-3.5" />
-                  <span>Store</span>
                 </Link>
               </div>
 
@@ -623,6 +617,10 @@ export default function HomePage() {
                     </span>
                   ))}
                 </div>
+              </div>
+
+              <div className="mb-6">
+                <ProjectStatsChart project={activeModalProject} />
               </div>
 
               <div className="mb-6">

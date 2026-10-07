@@ -157,11 +157,11 @@
 		/* ----------------------------------------------------------- */
 		/*  ON-CLICK: INTERACTIVE SKILL CATEGORY FILTER
 		/* ----------------------------------------------------------- */
-		$('.filter-btn').on('click', function() {
+		$('.skills-filters .filter-btn').on('click', function() {
 			var $btn = $(this);
 			var filterValue = $btn.attr('data-filter');
 
-			$('.filter-btn').removeClass('active');
+			$('.skills-filters .filter-btn').removeClass('active');
 			$btn.addClass('active');
 
 			var $items = $('.skill-item');
@@ -180,6 +180,44 @@
 					$items.each(function() {
 						var itemCategory = $(this).attr('data-category') || '';
 						if (itemCategory.indexOf(filterValue) !== -1) {
+							$(this).show().css({
+								'opacity': '1',
+								'transform': 'scale(1)'
+							});
+						} else {
+							$(this).hide();
+						}
+					});
+				}
+			}, 250);
+		});
+
+		/* ----------------------------------------------------------- */
+		/*  ON-CLICK: INTERACTIVE PORTFOLIO PROJECT CATEGORY FILTER
+		/* ----------------------------------------------------------- */
+		$('.portfolio-filters .filter-btn').on('click', function() {
+			var $btn = $(this);
+			var filterValue = $btn.attr('data-project-filter');
+
+			$('.portfolio-filters .filter-btn').removeClass('active');
+			$btn.addClass('active');
+
+			var $projectItems = $('.project-grid-item');
+			$projectItems.css({
+				'opacity': '0',
+				'transform': 'scale(0.90)'
+			});
+
+			setTimeout(function() {
+				if (filterValue === 'all') {
+					$projectItems.show().css({
+						'opacity': '1',
+						'transform': 'scale(1)'
+					});
+				} else {
+					$projectItems.each(function() {
+						var itemCategory = $(this).attr('data-category') || '';
+						if (itemCategory === filterValue) {
 							$(this).show().css({
 								'opacity': '1',
 								'transform': 'scale(1)'

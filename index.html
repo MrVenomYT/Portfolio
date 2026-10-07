@@ -1,21 +1,24 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-
 
 <head>
     <meta charset="utf-8">
-    <title> Personal Portfolio</title>
+    <title>Muhammad Hasil - Certified MERN Stack & Front-End Developer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Personal portfolio website of Muhammad Hasil, Certified MERN stack & front-end developer and Discord bot creator.">
 
     <!-- Template Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,600i,700" rel="stylesheet">
 
+    <!-- Font Awesome Icons (FA 4.7 + FA 6 Brands CDN for modern icons like Discord & GitHub) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+
     <!-- Template CSS Files -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/preloader.min.css" rel="stylesheet">
     <link href="css/circle.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/fm.revealator.jquery.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
@@ -76,11 +79,12 @@
                 <a href="#" onclick="setActiveStyleSheet('yellow');" title="yellow" class="color"><img src="img/styleswitcher/yellow.png" alt="yellow"/></a>
             </li>
         </ul>
-           <div id="hideSwitcher">&times;</div>
+        <div id="hideSwitcher">&times;</div>
     </div>
 </div>
 <div id="showSwitcher" class="styleSecondColor"><i class="fa fa-cog fa-spin"></i></div>
 <!-- Live Style Switcher Ends - demo only -->
+
 <!-- Header Starts -->
 <header class="header" id="navbar-collapse-toggle">
     <!-- Fixed Navigation Starts -->
@@ -97,14 +101,18 @@
                 <h2>About</h2>
             </a>
         </li>
-  
+        <li class="icon-box">
+            <i class="fa fa-briefcase"></i>
+            <a href="portfolio.html">
+                <h2>Portfolio</h2>
+            </a>
+        </li>
         <li class="icon-box">
             <i class="fa fa-envelope-open"></i>
             <a href="contact.html">
                 <h2>Contact</h2>
             </a>
         </li>
-        
     </ul>
     <!-- Fixed Navigation Ends -->
     <!-- Mobile Menu Starts -->
@@ -117,31 +125,360 @@
             <ul class="list-unstyled" id="menu">
                 <li class="active"><a href="index.html"><i class="fa fa-home"></i><span>Home</span></a></li>
                 <li><a href="about.html"><i class="fa fa-user"></i><span>About</span></a></li>
+                <li><a href="portfolio.html"><i class="fa fa-briefcase"></i><span>Portfolio</span></a></li>
                 <li><a href="contact.html"><i class="fa fa-envelope-open"></i><span>Contact</span></a></li>
-             
             </ul>
         </div>
     </nav>
     <!-- Mobile Menu Ends -->
 </header>
 <!-- Header Ends -->
-<!-- Main Content Starts -->
-<section class="container-fluid main-container container-home p-0 revealator-slideup revealator-once revealator-delay1">
+
+<!-- Main Hero Section Starts -->
+<section class="container-fluid main-container container-home p-0 revealator-slideup revealator-once revealator-delay1" id="home">
     <div class="color-block d-none d-lg-block"></div>
     <div class="row home-details-container align-items-center">
         <div class="col-lg-4 bg position-fixed d-none d-lg-block"></div>
         <div class="col-12 col-lg-8 offset-lg-4 home-details text-left text-sm-center text-lg-left">
             <div>
-                <img src="" class="img-fluid main-img-mobile d-none d-sm-block d-lg-none" alt="my picture" />
-                <h6 class="text-uppercase open-sans-font mb-0 d-block d-sm-none d-lg-block">hi there !</h6>
+                <img src="img/img-mobile.jpg" class="img-fluid main-img-mobile d-none d-sm-block d-lg-none" alt="Muhammad Hasil" />
+                <h6 class="text-uppercase open-sans-font mb-0 d-block d-sm-none d-lg-block">HI THERE !</h6>
                 <h1 class="text-uppercase poppins-font"><span>I'm</span> Muhammad Hasil</h1>
-                <p class="open-sans-font">I'm a Certified Mernstack & front‑end developer focused on crafting clean & user‑friendly experiences, I am passionate about make discord bots too.</p>
-                <a href="about.html" class="btn btn-about">more about me</a>
+                <p class="open-sans-font">I'm a Certified MERN stack & front‑end developer focused on crafting clean, modern & user‑friendly experiences. I build robust full-stack web applications and high-performance Discord bots.</p>
+                
+                <!-- Social Media Icons (GitHub, LinkedIn, Discord, Email) -->
+                <div class="home-social">
+                    <div class="social-item">
+                        <a href="https://github.com/MrVenomYT" target="_blank" rel="noopener noreferrer" class="social-btn" title="GitHub" aria-label="GitHub Profile">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                        <span class="social-tooltip">GitHub</span>
+                    </div>
+                    <div class="social-item">
+                        <a href="https://www.linkedin.com/in/muhammad-hasil" target="_blank" rel="noopener noreferrer" class="social-btn" title="LinkedIn" aria-label="LinkedIn Profile">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </a>
+                        <span class="social-tooltip">LinkedIn</span>
+                    </div>
+                    <div class="social-item">
+                        <a href="https://discord.com/users/MrVenomYT" target="_blank" rel="noopener noreferrer" class="social-btn" title="Discord" aria-label="Discord Profile">
+                            <i class="fa-brands fa-discord"></i>
+                        </a>
+                        <span class="social-tooltip">Discord</span>
+                    </div>
+                    <div class="social-item">
+                        <a href="mailto:t3ch91cal.h3r0@gmail.com" class="social-btn" title="Email Me" aria-label="Email Me">
+                            <i class="fa-solid fa-envelope"></i>
+                        </a>
+                        <span class="social-tooltip">Email</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="home-cta-group">
+                    <a href="about.html" class="btn btn-about">MORE ABOUT ME</a>
+                    <a href="#skills-section" class="btn-secondary-custom scrollToSkills">
+                        <i class="fa-solid fa-layer-group"></i> VIEW SKILLS
+                    </a>
+                </div>
+
+                <!-- Smooth Scroll Indicator -->
+                <a href="#skills-section" class="scroll-down-hint scrollToSkills">
+                    <span class="mouse-icon"><span class="mouse-wheel"></span></span>
+                    <span>Scroll to explore technical skills</span>
+                </a>
             </div>
         </div>
     </div>
 </section>
-<!-- Main Content Ends -->
+<!-- Main Hero Section Ends -->
+
+<!-- Technical Skills & MERN Stack Section Starts -->
+<section class="skills-home-section revealator-slideup revealator-once revealator-delay2" id="skills-section">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="row text-center">
+            <div class="col-12">
+                <div class="title-section text-left text-sm-center">
+                    <h1>MY <span>SKILLS</span></h1>
+                    <span class="title-bg">EXPERTISE</span>
+                </div>
+                <div class="skills-badge-header">
+                    <i class="fa-solid fa-code"></i> Certified MERN Stack Developer & Discord Bot Specialist
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Buttons (On Click Interactive Filtering) -->
+        <div class="row">
+            <div class="col-12">
+                <div class="skills-filters">
+                    <button type="button" class="filter-btn active" data-filter="all">All Skills</button>
+                    <button type="button" class="filter-btn" data-filter="mern">MERN Stack</button>
+                    <button type="button" class="filter-btn" data-filter="frontend">Frontend</button>
+                    <button type="button" class="filter-btn" data-filter="backend">Backend & DB</button>
+                    <button type="button" class="filter-btn" data-filter="tools">Bots & Tools</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bars & Core Competencies -->
+        <div class="row" id="skillsGridContainer">
+            <!-- MongoDB -->
+            <div class="col-12 col-md-6 skill-item" data-category="mern backend">
+                <div class="skill-progress-card">
+                    <div class="skill-header">
+                        <div class="skill-title-group">
+                            <div class="skill-icon-wrap" style="color: #47A248;">
+                                <i class="fa-solid fa-database"></i>
+                            </div>
+                            <div>
+                                <h4 class="skill-name">MongoDB & NoSQL</h4>
+                                <p class="skill-desc">Mongoose, Aggregations, Quick.db & Data Modeling</p>
+                            </div>
+                        </div>
+                        <span class="skill-percentage" data-target="95">0%</span>
+                    </div>
+                    <div class="skill-track">
+                        <div class="skill-fill" data-width="95%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Express.js -->
+            <div class="col-12 col-md-6 skill-item" data-category="mern backend">
+                <div class="skill-progress-card">
+                    <div class="skill-header">
+                        <div class="skill-title-group">
+                            <div class="skill-icon-wrap" style="color: #fff;">
+                                <i class="fa-solid fa-server"></i>
+                            </div>
+                            <div>
+                                <h4 class="skill-name">Express.js & REST APIs</h4>
+                                <p class="skill-desc">Routing, Middleware, JWT Authentication, Microservices</p>
+                            </div>
+                        </div>
+                        <span class="skill-percentage" data-target="90">0%</span>
+                    </div>
+                    <div class="skill-track">
+                        <div class="skill-fill" data-width="90%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- React.js -->
+            <div class="col-12 col-md-6 skill-item" data-category="mern frontend">
+                <div class="skill-progress-card">
+                    <div class="skill-header">
+                        <div class="skill-title-group">
+                            <div class="skill-icon-wrap" style="color: #61DAFB;">
+                                <i class="fa-brands fa-react"></i>
+                            </div>
+                            <div>
+                                <h4 class="skill-name">React.js & Component UI</h4>
+                                <p class="skill-desc">Hooks, State Management, SPAs, Redux & Next.js</p>
+                            </div>
+                        </div>
+                        <span class="skill-percentage" data-target="92">0%</span>
+                    </div>
+                    <div class="skill-track">
+                        <div class="skill-fill" data-width="92%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node.js -->
+            <div class="col-12 col-md-6 skill-item" data-category="mern backend">
+                <div class="skill-progress-card">
+                    <div class="skill-header">
+                        <div class="skill-title-group">
+                            <div class="skill-icon-wrap" style="color: #339933;">
+                                <i class="fa-brands fa-node-js"></i>
+                            </div>
+                            <div>
+                                <h4 class="skill-name">Node.js Backend</h4>
+                                <p class="skill-desc">Asynchronous Event Loop, RESTful Endpoints, Optimization</p>
+                            </div>
+                        </div>
+                        <span class="skill-percentage" data-target="88">0%</span>
+                    </div>
+                    <div class="skill-track">
+                        <div class="skill-fill" data-width="88%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JavaScript & TypeScript -->
+            <div class="col-12 col-md-6 skill-item" data-category="mern frontend backend">
+                <div class="skill-progress-card">
+                    <div class="skill-header">
+                        <div class="skill-title-group">
+                            <div class="skill-icon-wrap" style="color: #F7DF1E;">
+                                <i class="fa-brands fa-js"></i>
+                            </div>
+                            <div>
+                                <h4 class="skill-name">JavaScript (ES6+)</h4>
+                                <p class="skill-desc">Modern ES6+, DOM Manipulation, Async/Await, Modular Code</p>
+                            </div>
+                        </div>
+                        <span class="skill-percentage" data-target="94">0%</span>
+                    </div>
+                    <div class="skill-track">
+                        <div class="skill-fill" data-width="94%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HTML5 / CSS3 / Bootstrap / Sass -->
+            <div class="col-12 col-md-6 skill-item" data-category="frontend">
+                <div class="skill-progress-card">
+                    <div class="skill-header">
+                        <div class="skill-title-group">
+                            <div class="skill-icon-wrap" style="color: #E34F26;">
+                                <i class="fa-brands fa-html5"></i>
+                            </div>
+                            <div>
+                                <h4 class="skill-name">HTML5 / CSS3 / Sass / Bootstrap</h4>
+                                <p class="skill-desc">Responsive Layouts, Modern UI Styling, Flexbox & Grid</p>
+                            </div>
+                        </div>
+                        <span class="skill-percentage" data-target="98">0%</span>
+                    </div>
+                    <div class="skill-track">
+                        <div class="skill-fill" data-width="98%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Discord.js -->
+            <div class="col-12 col-md-6 skill-item" data-category="tools backend">
+                <div class="skill-progress-card">
+                    <div class="skill-header">
+                        <div class="skill-title-group">
+                            <div class="skill-icon-wrap" style="color: #5865F2;">
+                                <i class="fa-brands fa-discord"></i>
+                            </div>
+                            <div>
+                                <h4 class="skill-name">Discord.js & Bot Engineering</h4>
+                                <p class="skill-desc">Custom Bots, Slash Commands, WebSockets, Server Automation</p>
+                            </div>
+                        </div>
+                        <span class="skill-percentage" data-target="92">0%</span>
+                    </div>
+                    <div class="skill-track">
+                        <div class="skill-fill" data-width="92%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Git & Cloud Deployment -->
+            <div class="col-12 col-md-6 skill-item" data-category="tools">
+                <div class="skill-progress-card">
+                    <div class="skill-header">
+                        <div class="skill-title-group">
+                            <div class="skill-icon-wrap" style="color: #F05032;">
+                                <i class="fa-brands fa-git-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="skill-name">Git, GitHub & Cloud Hosting</h4>
+                                <p class="skill-desc">Version Control, CI/CD, Vercel, Render & Production Deployments</p>
+                            </div>
+                        </div>
+                        <span class="skill-percentage" data-target="86">0%</span>
+                    </div>
+                    <div class="skill-track">
+                        <div class="skill-fill" data-width="86%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tech Stack Badge Cards (Hover & 3D Interactive) -->
+        <div class="row mt-4">
+            <div class="col-6 col-md-3">
+                <div class="tech-badge-card">
+                    <div class="tech-badge-icon" style="color: #61DAFB;">
+                        <i class="fa-brands fa-react"></i>
+                    </div>
+                    <h5 class="tech-badge-name">React.js</h5>
+                    <span class="tech-badge-level">Advanced Frontend</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="tech-badge-card">
+                    <div class="tech-badge-icon" style="color: #339933;">
+                        <i class="fa-brands fa-node"></i>
+                    </div>
+                    <h5 class="tech-badge-name">Node.js</h5>
+                    <span class="tech-badge-level">Server Runtime</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="tech-badge-card">
+                    <div class="tech-badge-icon" style="color: #47A248;">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <h5 class="tech-badge-name">MongoDB</h5>
+                    <span class="tech-badge-level">NoSQL Database</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="tech-badge-card">
+                    <div class="tech-badge-icon" style="color: #5865F2;">
+                        <i class="fa-brands fa-discord"></i>
+                    </div>
+                    <h5 class="tech-badge-name">Discord.js</h5>
+                    <span class="tech-badge-level">Bot Creator</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Highlights & Performance Stats Banner -->
+        <div class="skills-stats-banner">
+            <div class="row">
+                <div class="col-6 col-lg-3">
+                    <div class="stat-item">
+                        <div class="stat-number"><span class="counter" data-count="4">0</span>+</div>
+                        <p class="stat-label">Core MERN Techs</p>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="stat-item">
+                        <div class="stat-number"><span class="counter" data-count="97">0</span>+</div>
+                        <p class="stat-label">Projects Completed</p>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="stat-item">
+                        <div class="stat-number"><span class="counter" data-count="81">0</span>+</div>
+                        <p class="stat-label">Satisfied Clients</p>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="stat-item">
+                        <div class="stat-number"><span class="counter" data-count="100">0</span>%</div>
+                        <p class="stat-label">Clean Responsive Code</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Call to action -->
+        <div class="row mt-5 text-center">
+            <div class="col-12">
+                <p class="open-sans-font text-muted mb-4">Have an interesting project or need a custom web app or Discord bot?</p>
+                <a href="contact.html" class="btn">LET'S WORK TOGETHER</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Technical Skills & MERN Stack Section Ends -->
+
+<!-- Notification Toast for interactive feedback -->
+<div class="portfolio-toast" id="portfolioToast">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toastMessage">Copied to clipboard!</span>
+</div>
 
 <!-- Template JS Files -->
 <script src="js/jquery-3.5.0.min.js"></script>
@@ -158,5 +495,4 @@
 <script src="js/custom.js"></script>
 
 </body>
-
 </html>

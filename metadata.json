@@ -1,0 +1,8 @@
+{
+  "name": "Muhammad Hasil - Personal Portfolio",
+  "description": "Personal portfolio website of Muhammad Hasil, Certified MERN stack & front-end developer.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

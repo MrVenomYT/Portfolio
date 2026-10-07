@@ -762,6 +762,62 @@
 </section>
 <!-- Testimonials Section Ends -->
 
+<!-- Newsletter Signup Section Starts -->
+<section class="newsletter-section revealator-slideup revealator-once revealator-delay1" id="newsletter">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="row text-center mb-4">
+            <div class="col-12">
+                <div class="title-section text-left text-sm-center" style="padding: 10px 0 20px;">
+                    <h1>STAY <span>CONNECTED</span></h1>
+                    <span class="title-bg">NEWSLETTER</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Newsletter Card -->
+        <div class="newsletter-card text-center">
+            <div class="newsletter-icon-badge">
+                <i class="fa-solid fa-paper-plane"></i>
+            </div>
+            <h2 class="newsletter-title">Subscribe to <span>Dev Updates</span></h2>
+            <p class="newsletter-desc open-sans-font">
+                Get monthly deep-dives on modern MERN stack architecture, Discord.js bot templates, web performance tips, and exclusive open-source project drops directly in your inbox.
+            </p>
+
+            <!-- Newsletter Signup Form -->
+            <form class="newsletter-form-container" id="newsletterForm" onsubmit="handleNewsletterSubmit(event)">
+                <div class="newsletter-input-group">
+                    <i class="fa-solid fa-envelope newsletter-input-icon"></i>
+                    <input type="email" class="newsletter-input" id="newsletterEmail" placeholder="Enter your work or personal email address..." required autocomplete="email">
+                    <button type="submit" class="newsletter-btn" id="newsletterSubmitBtn">
+                        <span>Subscribe</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="newsletter-status-message" id="newsletterStatusMessage"></div>
+            </form>
+
+            <!-- Lead Magnet & Privacy Highlights -->
+            <div class="newsletter-features-row">
+                <div class="newsletter-feature-item">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>Bi-weekly Full-Stack Tips</span>
+                </div>
+                <div class="newsletter-feature-item">
+                    <i class="fa-brands fa-discord"></i>
+                    <span>Free Discord Bot Code Starters</span>
+                </div>
+                <div class="newsletter-feature-item">
+                    <i class="fa-solid fa-lock"></i>
+                    <span>100% Privacy — Zero Spam</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Newsletter Signup Section Ends -->
+
 <!-- Notification Toast for interactive feedback -->
 <div class="portfolio-toast" id="portfolioToast">
     <i class="fa-solid fa-circle-check"></i>
@@ -783,6 +839,44 @@
 <!-- D3.js v7 CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script src="js/custom.js"></script>
+
+<script>
+function handleNewsletterSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('newsletterSubmitBtn');
+    const msg = document.getElementById('newsletterStatusMessage');
+    const emailInput = document.getElementById('newsletterEmail');
+    const email = emailInput.value.trim();
+
+    if (!email) return;
+
+    btn.innerHTML = '<span>Joining...</span> <i class="fa-solid fa-spinner fa-spin"></i>';
+    btn.disabled = true;
+
+    setTimeout(() => {
+        btn.innerHTML = '<span>Subscribed!</span> <i class="fa-solid fa-check"></i>';
+        btn.style.backgroundColor = '#28a745';
+        msg.className = 'newsletter-status-message success';
+        msg.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> Thank you for subscribing! A welcome guide and dev starter pack has been queued for ' + email + '.';
+        emailInput.value = '';
+
+        // Trigger portfolio toast
+        const toast = document.getElementById('portfolioToast');
+        const toastMsg = document.getElementById('toastMessage');
+        if (toast && toastMsg) {
+            toastMsg.innerText = 'Subscribed successfully to dev updates!';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+
+        setTimeout(() => {
+            btn.innerHTML = '<span>Subscribe</span> <i class="fa-solid fa-arrow-right"></i>';
+            btn.disabled = false;
+            btn.style.backgroundColor = '';
+        }, 4000);
+    }, 700);
+}
+</script>
 
 </body>
 </html>

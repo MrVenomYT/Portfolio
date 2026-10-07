@@ -143,7 +143,7 @@ export default function HomePage() {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
-                  href="/portfolio"
+                  href="/projects"
                   className="px-7 py-3.5 rounded-full bg-[#1e1e1e] hover:bg-[#252525] border border-zinc-700 text-zinc-200 hover:text-white font-bold font-poppins text-xs tracking-wider uppercase transition-colors"
                 >
                   Explore Works ({projects.length})
@@ -197,7 +197,7 @@ export default function HomePage() {
                 </h2>
               </div>
               <Link
-                href="/portfolio"
+                href="/projects"
                 className="inline-flex items-center gap-2 text-xs font-bold font-poppins text-skin hover:underline"
               >
                 <span>View All {projects.length} Projects</span>

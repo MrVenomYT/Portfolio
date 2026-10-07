@@ -87,104 +87,148 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
 
     const initListeners = () => {
       try {
+        const handleErr = (colName: string) => (err: any) => {
+          console.warn(`Firestore ${colName} listener notice:`, err?.message || err);
+        };
+
         // 1. Profile listener
-        const unsubProfile = onSnapshot(doc(db, 'portfolio_profile', 'main'), (docSnap) => {
-          if (docSnap.exists()) {
-            setProfile({ ...defaultProfile, ...(docSnap.data() as ProfileData) });
-          }
-        });
+        const unsubProfile = onSnapshot(
+          doc(db, 'portfolio_profile', 'main'),
+          (docSnap) => {
+            if (docSnap.exists()) {
+              setProfile({ ...defaultProfile, ...(docSnap.data() as ProfileData) });
+            }
+          },
+          handleErr('portfolio_profile')
+        );
         unsubs.push(unsubProfile);
 
         // 2. Projects listener
-        const unsubProjects = onSnapshot(collection(db, 'portfolio_projects'), (snap) => {
-          if (!snap.empty) {
-            const list: ProjectItem[] = [];
-            snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
-            setProjects(list);
-          }
-        });
+        const unsubProjects = onSnapshot(
+          collection(db, 'portfolio_projects'),
+          (snap) => {
+            if (!snap.empty) {
+              const list: ProjectItem[] = [];
+              snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
+              setProjects(list);
+            }
+          },
+          handleErr('portfolio_projects')
+        );
         unsubs.push(unsubProjects);
 
         // 3. Products listener
-        const unsubProducts = onSnapshot(collection(db, 'portfolio_products'), (snap) => {
-          if (!snap.empty) {
-            const list: DigitalProduct[] = [];
-            snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
-            setProducts(list);
-          }
-        });
+        const unsubProducts = onSnapshot(
+          collection(db, 'portfolio_products'),
+          (snap) => {
+            if (!snap.empty) {
+              const list: DigitalProduct[] = [];
+              snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
+              setProducts(list);
+            }
+          },
+          handleErr('portfolio_products')
+        );
         unsubs.push(unsubProducts);
 
         // 4. Services listener
-        const unsubServices = onSnapshot(collection(db, 'portfolio_services'), (snap) => {
-          if (!snap.empty) {
-            const list: ServiceItem[] = [];
-            snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
-            setServices(list);
-          }
-        });
+        const unsubServices = onSnapshot(
+          collection(db, 'portfolio_services'),
+          (snap) => {
+            if (!snap.empty) {
+              const list: ServiceItem[] = [];
+              snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
+              setServices(list);
+            }
+          },
+          handleErr('portfolio_services')
+        );
         unsubs.push(unsubServices);
 
         // 5. Education listener
-        const unsubEdu = onSnapshot(collection(db, 'portfolio_education'), (snap) => {
-          if (!snap.empty) {
-            const list: EducationItem[] = [];
-            snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
-            setEducation(list);
-          }
-        });
+        const unsubEdu = onSnapshot(
+          collection(db, 'portfolio_education'),
+          (snap) => {
+            if (!snap.empty) {
+              const list: EducationItem[] = [];
+              snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
+              setEducation(list);
+            }
+          },
+          handleErr('portfolio_education')
+        );
         unsubs.push(unsubEdu);
 
         // 6. Experience listener
-        const unsubExp = onSnapshot(collection(db, 'portfolio_experiences'), (snap) => {
-          if (!snap.empty) {
-            const list: ExperienceItem[] = [];
-            snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
-            setExperiences(list);
-          }
-        });
+        const unsubExp = onSnapshot(
+          collection(db, 'portfolio_experiences'),
+          (snap) => {
+            if (!snap.empty) {
+              const list: ExperienceItem[] = [];
+              snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
+              setExperiences(list);
+            }
+          },
+          handleErr('portfolio_experiences')
+        );
         unsubs.push(unsubExp);
 
         // 7. Certifications listener
-        const unsubCerts = onSnapshot(collection(db, 'portfolio_certifications'), (snap) => {
-          if (!snap.empty) {
-            const list: CertificationItem[] = [];
-            snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
-            setCertifications(list);
-          }
-        });
+        const unsubCerts = onSnapshot(
+          collection(db, 'portfolio_certifications'),
+          (snap) => {
+            if (!snap.empty) {
+              const list: CertificationItem[] = [];
+              snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
+              setCertifications(list);
+            }
+          },
+          handleErr('portfolio_certifications')
+        );
         unsubs.push(unsubCerts);
 
         // 8. Radar Skills listener
-        const unsubSkills = onSnapshot(doc(db, 'portfolio_skills', 'radar'), (docSnap) => {
-          if (docSnap.exists()) {
-            const data = docSnap.data();
-            if (data?.items && Array.isArray(data.items)) {
-              setRadarSkills(data.items);
+        const unsubSkills = onSnapshot(
+          doc(db, 'portfolio_skills', 'radar'),
+          (docSnap) => {
+            if (docSnap.exists()) {
+              const data = docSnap.data();
+              if (data?.items && Array.isArray(data.items)) {
+                setRadarSkills(data.items);
+              }
             }
-          }
-        });
+          },
+          handleErr('portfolio_skills')
+        );
         unsubs.push(unsubSkills);
 
         // 9. Testimonials listener
-        const unsubTest = onSnapshot(collection(db, 'portfolio_testimonials'), (snap) => {
-          if (!snap.empty) {
-            const list: TestimonialItem[] = [];
-            snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
-            setTestimonials(list);
-          }
-        });
+        const unsubTest = onSnapshot(
+          collection(db, 'portfolio_testimonials'),
+          (snap) => {
+            if (!snap.empty) {
+              const list: TestimonialItem[] = [];
+              snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
+              setTestimonials(list);
+            }
+          },
+          handleErr('portfolio_testimonials')
+        );
         unsubs.push(unsubTest);
 
         // 10. FAQs listener
-        const unsubFaqs = onSnapshot(doc(db, 'portfolio_faqs', 'main'), (docSnap) => {
-          if (docSnap.exists()) {
-            const data = docSnap.data();
-            if (data?.items && Array.isArray(data.items)) {
-              setFaqs(data.items);
+        const unsubFaqs = onSnapshot(
+          doc(db, 'portfolio_faqs', 'main'),
+          (docSnap) => {
+            if (docSnap.exists()) {
+              const data = docSnap.data();
+              if (data?.items && Array.isArray(data.items)) {
+                setFaqs(data.items);
+              }
             }
-          }
-        });
+          },
+          handleErr('portfolio_faqs')
+        );
         unsubs.push(unsubFaqs);
       } catch (err) {
         console.error('Firestore real-time listeners initialization notice:', err);

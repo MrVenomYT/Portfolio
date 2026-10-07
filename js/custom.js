@@ -217,6 +217,8 @@
 	$(document).ready(function() {
 
 		syncSkinColorVariable();
+		animateProgressBars();
+		animateStatsCounters();
 
 		// Update on switcher item click
 		$('.content-switcher ul li a').on('click', function() {
@@ -233,7 +235,12 @@
 		/* ----------------------------------------------------------- */
 		/*  FIX REVEALATOR ISSUE AFTER PAGE LOADED
 		/* ----------------------------------------------------------- */
-		$(".revealator-delay1").addClass('no-transform');
+		$(".revealator-delay1, .revealator-delay2, .revealator-delay3").addClass('no-transform');
+		if (typeof Revealator !== "undefined" && typeof Revealator.refresh === "function") {
+			setTimeout(function() {
+				Revealator.refresh();
+			}, 100);
+		}
 
 		/* ----------------------------------------------------------- */
 		/*  PORTFOLIO GALLERY

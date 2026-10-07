@@ -3596,6 +3596,337 @@ body.light .faq-answer-text {
   }
 }
 
+/* ----------------------------------------------------------- */
+/*  HOME PORTFOLIO PROJECTS SECTION
+/* ----------------------------------------------------------- */
+.home-projects-section {
+  padding: 80px 0 90px;
+  background: #111111;
+  position: relative;
+  border-top: 1px solid #222222;
+  border-bottom: 1px solid #222222;
+}
+
+.home-projects-section .title-section {
+  padding: 10px 0 30px;
+}
+
+.portfolio-badge-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(114, 182, 38, 0.12);
+  color: #72b626;
+  border: 1px solid rgba(114, 182, 38, 0.3);
+  padding: 6px 18px;
+  border-radius: 30px;
+  font-size: 13.5px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 30px;
+  letter-spacing: 0.5px;
+}
+
+.portfolio-badge-header i {
+  font-size: 14px;
+}
+
+/* Home Projects Filter Buttons */
+.home-portfolio-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 45px;
+}
+
+.home-portfolio-filters .filter-btn {
+  background: #1c1c1c;
+  color: #c5c5c5;
+  border: 1px solid #2d2d2d;
+  padding: 9px 22px;
+  border-radius: 30px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.home-portfolio-filters .filter-btn:hover {
+  background: #252525;
+  color: #ffffff;
+  border-color: #444;
+  transform: translateY(-2px);
+}
+
+.home-portfolio-filters .filter-btn.active {
+  background: #72b626;
+  color: #ffffff;
+  border-color: #72b626;
+  box-shadow: 0 6px 20px rgba(114, 182, 38, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Home Project Card Grid */
+.home-project-card {
+  background: #181818;
+  border: 1px solid #262626;
+  border-radius: 16px;
+  overflow: hidden;
+  height: calc(100% - 30px);
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.home-project-card:hover {
+  transform: translateY(-8px);
+  border-color: #72b626;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 25px rgba(114, 182, 38, 0.2);
+}
+
+/* Card Image Wrap */
+.home-project-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: #0d0d0d;
+}
+
+.home-project-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.home-project-card:hover .home-project-img-wrap img {
+  transform: scale(1.08);
+}
+
+.home-project-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.85) 100%);
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.home-project-card:hover .home-project-overlay {
+  opacity: 0.95;
+}
+
+.home-project-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  z-index: 2;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.home-project-badge.fullstack {
+  border-color: rgba(97, 218, 251, 0.5);
+  color: #61dafb;
+}
+
+.home-project-badge.bot {
+  border-color: rgba(88, 101, 242, 0.5);
+  color: #8892f7;
+}
+
+.home-project-badge.frontend {
+  border-color: rgba(240, 80, 50, 0.5);
+  color: #f77f68;
+}
+
+/* Card Body Content */
+.home-project-body {
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.home-project-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 10px;
+  line-height: 1.35;
+  transition: color 0.3s ease;
+}
+
+.home-project-card:hover .home-project-title {
+  color: #72b626;
+}
+
+.home-project-desc {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13.5px;
+  color: #a0a0a0;
+  line-height: 1.65;
+  margin-bottom: 18px;
+  flex-grow: 1;
+}
+
+/* Project Tech Tag Pills */
+.home-project-techs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.home-tech-tag {
+  background: #232323;
+  color: #cfcfcf;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid #333333;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Project Action Buttons */
+.home-project-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 15px;
+  border-top: 1px solid #252525;
+}
+
+.btn-project-action {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  text-decoration: none !important;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.btn-project-demo {
+  background: #72b626;
+  color: #ffffff !important;
+  border: 1px solid #72b626;
+}
+
+.btn-project-demo:hover {
+  background: #5d971e;
+  box-shadow: 0 4px 14px rgba(114, 182, 38, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-project-code {
+  background: #242424;
+  color: #e0e0e0 !important;
+  border: 1px solid #363636;
+}
+
+.btn-project-code:hover {
+  background: #303030;
+  color: #ffffff !important;
+  border-color: #555;
+  transform: translateY(-2px);
+}
+
+/* Light Theme overrides for Home Portfolio */
+body.light .home-projects-section {
+  background: #ffffff;
+  border-color: #e5e5e5;
+}
+
+body.light .home-portfolio-filters .filter-btn {
+  background: #f0f0f0;
+  color: #555;
+  border-color: #ddd;
+}
+
+body.light .home-portfolio-filters .filter-btn:hover {
+  background: #e4e4e4;
+  color: #111;
+}
+
+body.light .home-portfolio-filters .filter-btn.active {
+  background: #72b626;
+  color: #fff;
+  border-color: #72b626;
+}
+
+body.light .home-project-card {
+  background: #ffffff;
+  border-color: #eaeaea;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+body.light .home-project-card:hover {
+  border-color: #72b626;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+body.light .home-project-title {
+  color: #222222;
+}
+
+body.light .home-project-desc {
+  color: #666666;
+}
+
+body.light .home-tech-tag {
+  background: #f4f4f4;
+  color: #444444;
+  border-color: #e0e0e0;
+}
+
+body.light .home-project-actions {
+  border-color: #eeeeee;
+}
+
+body.light .btn-project-code {
+  background: #f0f0f0;
+  color: #333333 !important;
+  border-color: #dcdcdc;
+}
+
+body.light .btn-project-code:hover {
+  background: #e4e4e4;
+}
+
+
 
 
 

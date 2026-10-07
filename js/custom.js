@@ -416,6 +416,44 @@
 		});
 
 		/* ----------------------------------------------------------- */
+		/*  ON-CLICK: HOME PORTFOLIO PROJECTS CATEGORY FILTER
+		/* ----------------------------------------------------------- */
+		$('.home-portfolio-filters .filter-btn').on('click', function() {
+			var $btn = $(this);
+			var filterValue = $btn.attr('data-home-project-filter');
+
+			$('.home-portfolio-filters .filter-btn').removeClass('active');
+			$btn.addClass('active');
+
+			var $homeCards = $('.home-project-card-item');
+			$homeCards.css({
+				'opacity': '0',
+				'transform': 'scale(0.92)'
+			});
+
+			setTimeout(function() {
+				if (filterValue === 'all') {
+					$homeCards.show().css({
+						'opacity': '1',
+						'transform': 'scale(1)'
+					});
+				} else {
+					$homeCards.each(function() {
+						var itemCategory = $(this).attr('data-category') || '';
+						if (itemCategory.indexOf(filterValue) !== -1) {
+							$(this).show().css({
+								'opacity': '1',
+								'transform': 'scale(1)'
+							});
+						} else {
+							$(this).hide();
+						}
+					});
+				}
+			}, 220);
+		});
+
+		/* ----------------------------------------------------------- */
 		/*  ON-CLICK: FAQ ACCORDION EXPAND/COLLAPSE
 		/* ----------------------------------------------------------- */
 		$('.faq-accordion-header').on('click', function() {

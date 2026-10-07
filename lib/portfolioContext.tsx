@@ -57,6 +57,10 @@ interface PortfolioContextType {
   deleteExperience: (id: string) => Promise<void>;
   saveCertification: (item: CertificationItem) => Promise<void>;
   deleteCertification: (id: string) => Promise<void>;
+  saveTestimonial: (item: TestimonialItem) => Promise<void>;
+  deleteTestimonial: (id: string) => Promise<void>;
+  saveFAQ: (faq: FAQItem, index?: number) => Promise<void>;
+  deleteFAQ: (index: number) => Promise<void>;
   updateProfile: (profile: Partial<ProfileData>) => Promise<void>;
   updateRadarSkills: (skills: RadarProficiency[]) => Promise<void>;
   seedAllToDatabase: () => Promise<void>;
@@ -88,89 +92,115 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
           if (docSnap.exists()) {
             setProfile({ ...defaultProfile, ...(docSnap.data() as ProfileData) });
           }
-        }, (err) => console.warn('Profile sync:', err));
+        });
         unsubs.push(unsubProfile);
 
         // 2. Projects listener
-        const unsubProjects = onSnapshot(collection(db, 'portfolio_projects'), (snapshot) => {
-          if (!snapshot.empty) {
+        const unsubProjects = onSnapshot(collection(db, 'portfolio_projects'), (snap) => {
+          if (!snap.empty) {
             const list: ProjectItem[] = [];
-            snapshot.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
+            snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
             setProjects(list);
           }
-        }, (err) => console.warn('Projects sync:', err));
+        });
         unsubs.push(unsubProjects);
 
         // 3. Products listener
-        const unsubProducts = onSnapshot(collection(db, 'portfolio_products'), (snapshot) => {
-          if (!snapshot.empty) {
+        const unsubProducts = onSnapshot(collection(db, 'portfolio_products'), (snap) => {
+          if (!snap.empty) {
             const list: DigitalProduct[] = [];
-            snapshot.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
+            snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
             setProducts(list);
           }
-        }, (err) => console.warn('Products sync:', err));
+        });
         unsubs.push(unsubProducts);
 
         // 4. Services listener
-        const unsubServices = onSnapshot(collection(db, 'portfolio_services'), (snapshot) => {
-          if (!snapshot.empty) {
+        const unsubServices = onSnapshot(collection(db, 'portfolio_services'), (snap) => {
+          if (!snap.empty) {
             const list: ServiceItem[] = [];
-            snapshot.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
+            snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
             setServices(list);
           }
-        }, (err) => console.warn('Services sync:', err));
+        });
         unsubs.push(unsubServices);
 
         // 5. Education listener
-        const unsubEdu = onSnapshot(collection(db, 'portfolio_education'), (snapshot) => {
-          if (!snapshot.empty) {
+        const unsubEdu = onSnapshot(collection(db, 'portfolio_education'), (snap) => {
+          if (!snap.empty) {
             const list: EducationItem[] = [];
-            snapshot.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
+            snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
             setEducation(list);
           }
-        }, (err) => console.warn('Education sync:', err));
+        });
         unsubs.push(unsubEdu);
 
-        // 6. Experiences listener
-        const unsubExp = onSnapshot(collection(db, 'portfolio_experiences'), (snapshot) => {
-          if (!snapshot.empty) {
+        // 6. Experience listener
+        const unsubExp = onSnapshot(collection(db, 'portfolio_experiences'), (snap) => {
+          if (!snap.empty) {
             const list: ExperienceItem[] = [];
-            snapshot.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
+            snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
             setExperiences(list);
           }
-        }, (err) => console.warn('Experiences sync:', err));
+        });
         unsubs.push(unsubExp);
 
         // 7. Certifications listener
-        const unsubCerts = onSnapshot(collection(db, 'portfolio_certifications'), (snapshot) => {
-          if (!snapshot.empty) {
+        const unsubCerts = onSnapshot(collection(db, 'portfolio_certifications'), (snap) => {
+          if (!snap.empty) {
             const list: CertificationItem[] = [];
-            snapshot.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
+            snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
             setCertifications(list);
           }
-        }, (err) => console.warn('Certs sync:', err));
+        });
         unsubs.push(unsubCerts);
 
-        // 8. Skills listener
+        // 8. Radar Skills listener
         const unsubSkills = onSnapshot(doc(db, 'portfolio_skills', 'radar'), (docSnap) => {
-          if (docSnap.exists() && docSnap.data().items) {
-            setRadarSkills(docSnap.data().items);
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            if (data?.items && Array.isArray(data.items)) {
+              setRadarSkills(data.items);
+            }
           }
-        }, (err) => console.warn('Skills sync:', err));
+        });
         unsubs.push(unsubSkills);
-      } catch (e) {
-        console.warn('Firebase sync warning:', e);
+
+        // 9. Testimonials listener
+        const unsubTest = onSnapshot(collection(db, 'portfolio_testimonials'), (snap) => {
+          if (!snap.empty) {
+            const list: TestimonialItem[] = [];
+            snap.forEach((d) => list.push({ id: d.id, ...(d.data() as any) }));
+            setTestimonials(list);
+          }
+        });
+        unsubs.push(unsubTest);
+
+        // 10. FAQs listener
+        const unsubFaqs = onSnapshot(doc(db, 'portfolio_faqs', 'main'), (docSnap) => {
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            if (data?.items && Array.isArray(data.items)) {
+              setFaqs(data.items);
+            }
+          }
+        });
+        unsubs.push(unsubFaqs);
+      } catch (err) {
+        console.error('Firestore real-time listeners initialization notice:', err);
       } finally {
         setLoading(false);
       }
     };
 
     initListeners();
+
     return () => {
-      unsubs.forEach((unsub) => unsub());
+      unsubs.forEach((u) => u());
     };
   }, []);
 
+  // CRUD Actions
   const saveProject = async (project: ProjectItem) => {
     const id = project.id || `proj-${Date.now()}`;
     const cleanProject = { ...project, id };
@@ -267,6 +297,39 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
     setCertifications((prev) => prev.filter((c) => c.id !== id));
   };
 
+  const saveTestimonial = async (item: TestimonialItem) => {
+    const id = item.id || `test-${Date.now()}`;
+    const cleanItem = { ...item, id };
+    await setDoc(doc(db, 'portfolio_testimonials', id), cleanItem, { merge: true });
+    setTestimonials((prev) => {
+      const exists = prev.some((t) => t.id === id);
+      if (exists) return prev.map((t) => (t.id === id ? cleanItem : t));
+      return [...prev, cleanItem];
+    });
+  };
+
+  const deleteTestimonial = async (id: string) => {
+    await deleteDoc(doc(db, 'portfolio_testimonials', id));
+    setTestimonials((prev) => prev.filter((t) => t.id !== id));
+  };
+
+  const saveFAQ = async (faq: FAQItem, index?: number) => {
+    let updated: FAQItem[];
+    if (index !== undefined && index >= 0 && index < faqs.length) {
+      updated = faqs.map((f, i) => (i === index ? faq : f));
+    } else {
+      updated = [...faqs, faq];
+    }
+    await setDoc(doc(db, 'portfolio_faqs', 'main'), { items: updated }, { merge: true });
+    setFaqs(updated);
+  };
+
+  const deleteFAQ = async (index: number) => {
+    const updated = faqs.filter((_, i) => i !== index);
+    await setDoc(doc(db, 'portfolio_faqs', 'main'), { items: updated }, { merge: true });
+    setFaqs(updated);
+  };
+
   const updateProfile = async (newProfile: Partial<ProfileData>) => {
     const merged = { ...profile, ...newProfile };
     await setDoc(doc(db, 'portfolio_profile', 'main'), merged, { merge: true });
@@ -316,6 +379,14 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
 
       // 8. Radar Skills
       await setDoc(doc(db, 'portfolio_skills', 'radar'), { items: defaultRadarSkills }, { merge: true });
+
+      // 9. Testimonials
+      for (const t of defaultTestimonials) {
+        await setDoc(doc(db, 'portfolio_testimonials', t.id), t, { merge: true });
+      }
+
+      // 10. FAQs
+      await setDoc(doc(db, 'portfolio_faqs', 'main'), { items: defaultFAQs }, { merge: true });
     } catch (e) {
       console.error('Seeding error:', e);
       throw e;
@@ -351,6 +422,10 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
         deleteExperience,
         saveCertification,
         deleteCertification,
+        saveTestimonial,
+        deleteTestimonial,
+        saveFAQ,
+        deleteFAQ,
         updateProfile,
         updateRadarSkills,
         seedAllToDatabase,

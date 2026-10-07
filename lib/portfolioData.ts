@@ -156,13 +156,14 @@ Additionally, I specialize in Discord.js bot development and quick.db integratio
 };
 
 export const defaultRadarSkills: RadarProficiency[] = [
-  { id: 'react', axis: 'React.js & Next.js', score: 94, fullMark: 100 },
-  { id: 'tailwind', axis: 'Tailwind CSS & UI', score: 96, fullMark: 100 },
-  { id: 'mongodb', axis: 'MongoDB & Cloud DBs', score: 92, fullMark: 100 },
-  { id: 'node', axis: 'Node.js & Express REST', score: 90, fullMark: 100 },
-  { id: 'discord', axis: 'Discord.js & Bots', score: 95, fullMark: 100 },
-  { id: 'minecraft', axis: 'Minecraft & Plugins', score: 90, fullMark: 100 },
-  { id: 'sales', axis: 'Sales Eng & B2B Lead Gen', score: 88, fullMark: 100 },
+  { id: 'react', axis: 'React.js (94%)', score: 94, fullMark: 100 },
+  { id: 'next', axis: 'Next.js (91%)', score: 91, fullMark: 100 },
+  { id: 'tailwind', axis: 'Tailwind CSS (96%)', score: 96, fullMark: 100 },
+  { id: 'mongodb', axis: 'MongoDB & Mongoose (92%)', score: 92, fullMark: 100 },
+  { id: 'node', axis: 'Node.js & Express (90%)', score: 90, fullMark: 100 },
+  { id: 'discord', axis: 'Discord.js & Bots (95%)', score: 95, fullMark: 100 },
+  { id: 'minecraft', axis: 'Minecraft Dev (90%)', score: 90, fullMark: 100 },
+  { id: 'sales', axis: 'B2B Lead Gen & Sales (88%)', score: 88, fullMark: 100 },
 ];
 
 export const defaultExperiences: ExperienceItem[] = [
@@ -170,7 +171,7 @@ export const defaultExperiences: ExperienceItem[] = [
     id: 'exp-1',
     period: '2024 - Present',
     role: 'Full Stack Developer',
-    company: 'Freelance & Client Systems (Fiverr Pro)',
+    company: 'Freelance & Client Systems',
     link: 'https://pro.fiverr.com/users/venomdesigne613/',
     desc: 'Built responsive web apps, full-stack portfolio systems, interactive dashboards, custom APIs, Discord bots, Minecraft/Roblox integrations, and high-performance UI flows.',
   },
@@ -192,7 +193,7 @@ export const defaultExperiences: ExperienceItem[] = [
     id: 'exp-4',
     period: '2016 - 2018',
     role: 'WordPress Developer',
-    company: 'Freelance Consultant',
+    company: 'Freelance',
     desc: 'Completed 500+ private client projects building custom themes, plugins, and responsive sites.',
   },
   {
@@ -206,7 +207,7 @@ export const defaultExperiences: ExperienceItem[] = [
 
 export const defaultEducation: EducationItem[] = [
   {
-    id: 'edu-bbit',
+    id: 'edu-1',
     period: '2025 - Present',
     degree: 'Bachelor of Science in Business & Information Technology (BBIT)',
     school: 'Virtual University of Pakistan',
@@ -214,14 +215,14 @@ export const defaultEducation: EducationItem[] = [
     desc: 'Combining Information Technology and enterprise software systems. Focused on full-stack web engineering, database architecture, software development, and modern web application deployment.',
   },
   {
-    id: 'edu-ics',
+    id: 'edu-2',
     period: '2014 - 2016',
     degree: 'Intermediate (ICS - Computer Science)',
     school: 'CIMS (Central Group Of Colleges)',
-    desc: 'Completed Intermediate studies in Computer Science with strong foundation in programming and computer logic.',
+    desc: 'Completed Intermediate studies in Computer Science.',
   },
   {
-    id: 'edu-matric',
+    id: 'edu-3',
     period: '2010 - 2012',
     degree: 'Matriculation (Computer Science)',
     school: 'Al-Qalam High School',
@@ -235,7 +236,7 @@ export const defaultCertifications: CertificationItem[] = [
     title: 'Technical Sales',
     issuer: 'John Care (LinkedIn Learning)',
     date: '2025',
-    skills: 'Technical Sales, B2B Discovery, Solution Architecture, Client Alignment',
+    skills: 'Technical Sales, B2B Discovery, Solution Architecture',
     verificationLink: 'https://www.linkedin.com/learning/certificates/5fdb0df8d0d818233c6fd949d93dd1a19fed1810b65089ce616c79c69d860274',
   },
   {
@@ -243,7 +244,7 @@ export const defaultCertifications: CertificationItem[] = [
     title: 'Salesforce: Sales Automation for Salespeople',
     issuer: 'Christine Volden (LinkedIn Learning)',
     date: '2025',
-    skills: 'Salesforce CRM, Sales Automation, Pipeline Tracking, Opportunity Management',
+    skills: 'Salesforce CRM, Sales Automation, Pipeline Tracking',
     verificationLink: 'https://www.linkedin.com/learning/certificates/919a525db2af917e227508a1acf83d9a6a728fd792a707a5d3724f5f53da9f72',
   },
   {
@@ -251,7 +252,7 @@ export const defaultCertifications: CertificationItem[] = [
     title: 'Program Databases with Transact-SQL',
     issuer: 'Adam Wilbert (LinkedIn Learning)',
     date: '2025',
-    skills: 'T-SQL, Relational Databases, Stored Procedures, Indexing, Query Optimization',
+    skills: 'T-SQL, Relational Databases, Stored Procedures, Indexing',
     verificationLink: 'https://www.linkedin.com/learning/certificates/a7691b4007228f21ae4e4c0f6b0837d5a5e4707547eb1c905a974b8d3e3d5c09',
   },
   {
@@ -259,7 +260,7 @@ export const defaultCertifications: CertificationItem[] = [
     title: 'Project Management Foundations',
     issuer: 'Bonnie Biafore (LinkedIn Learning)',
     date: '2025',
-    skills: 'Agile Lifecycles, Sprint Planning, Risk Management, Deliverable Scoping',
+    skills: 'Agile Lifecycles, Sprint Planning, Risk Management',
     verificationLink: 'https://www.linkedin.com/learning/certificates/169d2cf06c18bf265649f7da6a144ac9d7b544f575a8bc7a77aa946cf4712201',
   },
   {
@@ -267,7 +268,7 @@ export const defaultCertifications: CertificationItem[] = [
     title: 'Advanced Product Marketing',
     issuer: 'Jonathan Chang (LinkedIn Learning)',
     date: '2025',
-    skills: 'Product Positioning, Go-To-Market Strategy, User Persona Mapping',
+    skills: 'Product Positioning, Go-To-Market Strategy, User Personas',
     verificationLink: 'https://www.linkedin.com/learning/certificates/f8e6621a64acbf7d9d9e5c80cb7f6a9cf3e35ad73d66f0b8363c52f69910b0d3',
   },
   {
@@ -275,7 +276,7 @@ export const defaultCertifications: CertificationItem[] = [
     title: 'PMI - Project Management Professional (PMP)®',
     issuer: 'Total Seminars (LinkedIn Learning)',
     date: '2025',
-    skills: 'PMP Methodologies, Enterprise Project Governance, Resource Allocation',
+    skills: 'PMP Methodologies, Enterprise Governance, Scoping',
     verificationLink: 'https://www.linkedin.com/learning/certificates/cce119d92c617dac81812ed1797893fe59d984bd6153e9ed828a4167ae31610a',
   },
   {
@@ -283,14 +284,14 @@ export const defaultCertifications: CertificationItem[] = [
     title: 'Full-Stack Software Engineering & Modern Web Architecture',
     issuer: 'Samer Buna (LinkedIn Learning)',
     date: '2025',
-    skills: 'React.js, Node.js, Express, Microservices, Cloud Architecture, GraphQL',
+    skills: 'React.js, Node.js, Express, Microservices, Cloud Architecture',
     verificationLink: 'https://www.linkedin.com/learning/certificates/5235036d3988c62e762dffdcf4a88084150c6c88f341761a5897c8ccdaa43a70',
   },
 ];
 
 export const defaultServices: ServiceItem[] = [
   {
-    id: 'service-fullstack',
+    id: 'srv-1',
     title: 'Full-Stack Web App Development',
     category: 'Engineering',
     startingPrice: '$800',
@@ -307,7 +308,7 @@ export const defaultServices: ServiceItem[] = [
     tech: ['React.js', 'Next.js', 'Node.js', 'Express', 'MongoDB Atlas', 'Tailwind CSS'],
   },
   {
-    id: 'service-uiux',
+    id: 'srv-2',
     title: 'UI/UX Design & Frontend Engineering',
     category: 'Design & Code',
     startingPrice: '$500',
@@ -324,7 +325,7 @@ export const defaultServices: ServiceItem[] = [
     tech: ['Figma', 'Tailwind CSS', 'Framer Motion', 'React', 'HTML5 Canvas'],
   },
   {
-    id: 'service-admin-cms',
+    id: 'srv-3',
     title: 'Custom Admin Dashboards & CMS',
     category: 'Enterprise SaaS',
     startingPrice: '$650',
@@ -341,7 +342,7 @@ export const defaultServices: ServiceItem[] = [
     tech: ['Next.js', 'Firebase Auth', 'Firestore', 'Chart.js / D3.js', 'Tailwind'],
   },
   {
-    id: 'service-api-db',
+    id: 'srv-4',
     title: 'API Integration & Database Architecture',
     category: 'Backend Architecture',
     startingPrice: '$450',
@@ -367,7 +368,7 @@ export const defaultProjects: ProjectItem[] = [
     categoryLabel: 'Fullstack React / Web App',
     image: '/img/projects/project-1.jpg',
     description: 'A traveling web application featuring destination guides, itinerary discovery, and responsive UI.',
-    techs: ['React', 'Next.js', 'Node.js', 'Tailwind CSS'],
+    techs: ['React', 'Next.js', 'Node.js'],
     githubUrl: 'https://github.com/MrVenomYT',
     demoUrl: 'https://omni-travels-teal.vercel.app/',
     demoLabel: 'Live Demo',
@@ -385,7 +386,7 @@ export const defaultProjects: ProjectItem[] = [
     categoryLabel: 'Vanilla / Web Design',
     image: '/img/projects/project-6.jpg',
     description: 'Simple Apparel and footwear product showcase website with responsive layouts and interactive display.',
-    techs: ['HTML', 'CSS', 'JavaScript', 'Responsive UI'],
+    techs: ['HTML', 'CSS', 'JavaScript'],
     githubUrl: 'https://github.com/MrVenomYT',
     demoUrl: 'https://adidas-plum.vercel.app/',
     demoLabel: 'Live Storefront',
@@ -403,7 +404,7 @@ export const defaultProjects: ProjectItem[] = [
     categoryLabel: 'Fullstack React / Web App',
     image: '/img/projects/project-3.jpg',
     description: 'Car vault platform for vehicle inventory listings, vehicle specs, and showcase.',
-    techs: ['React', 'Next.js', 'Node.js', 'Tailwind CSS'],
+    techs: ['React', 'Next.js', 'Node.js'],
     githubUrl: 'https://github.com/MrVenomYT',
     demoUrl: 'https://auto-vault-mu.vercel.app/',
     demoLabel: 'Live Vault',
@@ -421,7 +422,7 @@ export const defaultProjects: ProjectItem[] = [
     categoryLabel: 'Fullstack React / Web App',
     image: 'https://github.com/MrVenomYT/drive-nest/raw/main/site.jpg',
     description: 'Modern car rental web application with booking reservation flows, vehicle search, and fleet management.',
-    techs: ['React', 'Next.js', 'Node.js', 'Booking Flow'],
+    techs: ['React', 'Next.js', 'Node.js'],
     githubUrl: 'https://github.com/MrVenomYT/drive-nest',
     demoUrl: 'https://drive-nest-six.vercel.app/',
     demoLabel: 'Explore DriveNest',
@@ -439,7 +440,7 @@ export const defaultProjects: ProjectItem[] = [
     categoryLabel: 'React / MERN Stack',
     image: '/img/projects/project-1.jpg',
     description: 'A fully customizable e-commerce web store application with product catalog, cart management, and checkout.',
-    techs: ['React', 'Next.js', 'Node.js', 'MongoDB', 'Stripe'],
+    techs: ['React', 'Next.js', 'Node.js'],
     githubUrl: 'https://github.com/MrVenomYT',
     demoUrl: 'https://proshop-beryl.vercel.app/',
     demoLabel: 'Live Proshop',
@@ -457,7 +458,7 @@ export const defaultProjects: ProjectItem[] = [
     categoryLabel: 'Fullstack React / Web App',
     image: '/img/projects/project-4.jpg',
     description: 'A full-stack webstore application featuring product collections, responsive navigation, and user cart flow.',
-    techs: ['React', 'Next.js', 'Node.js', 'Express', 'Tailwind'],
+    techs: ['React', 'Next.js', 'Node.js'],
     githubUrl: 'https://github.com/MrVenomYT',
     demoUrl: 'https://eshop-pi-five.vercel.app/',
     demoLabel: 'Visit Eshop',
@@ -475,7 +476,7 @@ export const defaultProjects: ProjectItem[] = [
     categoryLabel: 'Fullstack React / Luxury Rental',
     image: 'https://raw.githubusercontent.com/MrVenomYT/Veloce./refs/heads/main/src/assets/veloce.jpg',
     description: 'Hand-delivered to private aviation tarmacs, five-star residences, and executive offices in under 60 minutes. Guaranteed exact model reservations with zero-deductible coverage.',
-    techs: ['React', 'Next.js', 'Node.js', 'Luxury UI/UX'],
+    techs: ['React', 'Next.js', 'Node.js'],
     githubUrl: 'https://github.com/MrVenomYT/Veloce.',
     demoUrl: 'https://veloce-five-murex.vercel.app/',
     demoLabel: 'Experience Veloce',
@@ -493,7 +494,7 @@ export const defaultProjects: ProjectItem[] = [
     categoryLabel: 'Fullstack React / Auto Marketplace',
     image: '/img/projects/project-7.jpg',
     description: 'Car buying, selling, and leasing platform with search filters, vehicle profiles, and responsive cards.',
-    techs: ['React', 'Next.js', 'Node.js', 'Tailwind CSS'],
+    techs: ['React', 'Next.js', 'Node.js'],
     githubUrl: 'https://github.com/MrVenomYT',
     demoUrl: 'https://apex-motors-mu.vercel.app/',
     demoLabel: 'Launch Apex Motors',
@@ -511,7 +512,7 @@ export const defaultProjects: ProjectItem[] = [
     categoryLabel: 'Fullstack React / Educational Portal',
     image: '/img/projects/project-5.jpg',
     description: 'An exam and past paper repository web app designed to help students prepare for tests and academic assessments.',
-    techs: ['React', 'Next.js', 'Node.js', 'PDF Indexing'],
+    techs: ['React', 'Next.js', 'Node.js'],
     githubUrl: 'https://github.com/MrVenomYT',
     demoUrl: 'https://venom-papers.vercel.app/',
     demoLabel: 'Access Papers Bank',
@@ -707,7 +708,7 @@ export const defaultDigitalProducts: DigitalProduct[] = [
     description: 'Production-ready travel web application template with dynamic routing and responsive layouts.',
     demoUrl: 'https://omni-travels-teal.vercel.app/',
     purchaseUrl: 'https://pro.fiverr.com/users/venomdesigne613/',
-    features: ['React', 'Next.js', 'Node.js', 'Responsive Itineraries'],
+    features: ['React', 'Next.js', 'Node.js', 'Responsive Grid'],
     image: '/img/projects/project-1.jpg',
   },
   {
@@ -718,7 +719,7 @@ export const defaultDigitalProducts: DigitalProduct[] = [
     description: 'Minimalist and high-performance product and apparel template.',
     demoUrl: 'https://adidas-plum.vercel.app/',
     purchaseUrl: 'https://pro.fiverr.com/users/venomdesigne613/',
-    features: ['HTML', 'CSS', 'JavaScript', 'Product Carousel'],
+    features: ['HTML', 'CSS', 'JavaScript', 'Interactive 360 Viewer'],
     image: '/img/projects/project-6.jpg',
   },
   {
@@ -729,7 +730,7 @@ export const defaultDigitalProducts: DigitalProduct[] = [
     description: 'Auto catalog and showroom template for vehicle dealerships.',
     demoUrl: 'https://auto-vault-mu.vercel.app/',
     purchaseUrl: 'https://pro.fiverr.com/users/venomdesigne613/',
-    features: ['React', 'Next.js', 'Node.js', 'Faceted Auto Filters'],
+    features: ['React', 'Next.js', 'Node.js', 'Vehicle Filter Matrix'],
     image: '/img/projects/project-3.jpg',
   },
   {
@@ -740,7 +741,7 @@ export const defaultDigitalProducts: DigitalProduct[] = [
     description: 'Full car rental booking platform source code with fleet showcase.',
     demoUrl: 'https://drive-nest-six.vercel.app/',
     purchaseUrl: 'https://pro.fiverr.com/users/venomdesigne613/',
-    features: ['React', 'Next.js', 'Node.js', 'Booking Reservation Engine'],
+    features: ['React', 'Next.js', 'Node.js', 'Rental Calendar Picker'],
     image: 'https://github.com/MrVenomYT/drive-nest/raw/main/site.jpg',
   },
   {
@@ -751,7 +752,7 @@ export const defaultDigitalProducts: DigitalProduct[] = [
     description: 'Fully customizable e-commerce store with modern shopping flows.',
     demoUrl: 'https://proshop-beryl.vercel.app/',
     purchaseUrl: 'https://pro.fiverr.com/users/venomdesigne613/',
-    features: ['React', 'Next.js', 'Node.js', 'Stripe Cart & Checkout'],
+    features: ['React', 'Next.js', 'Node.js', 'Stripe Checkout'],
     image: '/img/projects/project-1.jpg',
   },
   {
@@ -759,10 +760,10 @@ export const defaultDigitalProducts: DigitalProduct[] = [
     title: 'Eshop Full-Stack Webstore',
     price: '$29',
     category: 'Web Apps',
-    description: 'Complete full-stack web store template with user cart flow.',
+    description: 'Complete full-stack web store template.',
     demoUrl: 'https://eshop-pi-five.vercel.app/',
     purchaseUrl: 'https://pro.fiverr.com/users/venomdesigne613/',
-    features: ['React', 'Next.js', 'Node.js', 'Dynamic Product Grid'],
+    features: ['React', 'Next.js', 'Node.js', 'Cart Sync Engine'],
     image: '/img/projects/project-4.jpg',
   },
   {
@@ -773,71 +774,78 @@ export const defaultDigitalProducts: DigitalProduct[] = [
     description: 'Premium VIP concierge and luxury transport rental template.',
     demoUrl: 'https://veloce-five-murex.vercel.app/',
     purchaseUrl: 'https://pro.fiverr.com/users/venomdesigne613/',
-    features: ['React', 'Next.js', 'Node.js', 'Luxury Glassmorphic UI'],
+    features: ['React', 'Next.js', 'Node.js', 'Luxury Dark Glass UI'],
     image: 'https://raw.githubusercontent.com/MrVenomYT/Veloce./refs/heads/main/src/assets/veloce.jpg',
   },
   {
-    id: 'prod-apex',
+    id: 'prod-apexmotors',
     title: 'Apex Motors Auto Portal',
     price: '$29',
     category: 'Web Apps',
     description: 'Auto marketplace and rental web application.',
     demoUrl: 'https://apex-motors-mu.vercel.app/',
     purchaseUrl: 'https://pro.fiverr.com/users/venomdesigne613/',
-    features: ['React', 'Next.js', 'Node.js', 'Monthly Finance Calculator'],
+    features: ['React', 'Next.js', 'Node.js', 'Loan Payment Estimator'],
     image: '/img/projects/project-7.jpg',
   },
 ];
 
 export const defaultTestimonials: TestimonialItem[] = [
   {
-    id: 't-1',
+    id: 'test-1',
     name: 'James Allen',
     role: 'Verified Client',
     rating: 5,
-    comment: 'Hasil is highly skilled, creative, and dedicated to delivering exceptional work. His attention to detail, technical expertise, and ability to turn ideas into effective solutions truly stand out. It was a pleasure working with him, and I would confidently recommend Hasil for any development project.',
+    comment:
+      'Hasil is highly skilled, creative, and dedicated to delivering exceptional work. His attention to detail, technical expertise, and ability to turn ideas into effective solutions truly stand out. It was a pleasure working with him, and I would confidently recommend Hasil for any development project.',
   },
   {
-    id: 't-2',
+    id: 'test-2',
     name: 'Sarah K.',
     role: 'Digital Marketing Director, Nexus Media',
     rating: 5,
-    comment: 'Muhammad delivered our Next.js & React web application faster than expected with incredible attention to detail, clean full-stack code, and smooth 192-frame canvas animations.',
+    comment:
+      'Muhammad delivered our Next.js & React web application faster than expected with incredible attention to detail, clean full-stack code, and smooth 192-frame canvas animations.',
   },
   {
-    id: 't-3',
+    id: 'test-3',
     name: 'David M.',
     role: 'SaaS Founder, CloudSync Inc',
     rating: 5,
-    comment: 'The interactive admin dashboard and MongoDB database persistence he built transformed how our client operations work. Highly recommended for any serious web project!',
+    comment:
+      'The interactive admin dashboard and MongoDB database persistence he built transformed how our client operations work. Highly recommended for any serious web project!',
   },
   {
-    id: 't-4',
+    id: 'test-4',
     name: 'Alex R.',
     role: 'E-Commerce Lead, Aura Collective',
     rating: 5,
-    comment: 'Outstanding full-stack engineering precision, Firebase authentication integration, and flawless responsiveness across all desktop and mobile devices. A true professional.',
+    comment:
+      'Outstanding full-stack engineering precision, Firebase authentication integration, and flawless responsiveness across all desktop and mobile devices. A true professional.',
   },
   {
-    id: 't-5',
+    id: 'test-5',
     name: 'Elena V.',
     role: 'Creative Director, Studio Lumina',
     rating: 5,
-    comment: 'He transformed our brand UI with stunning dark glassmorphic design, smooth scroll physics, and fast Next.js Pages Router performance. Exceptional quality!',
+    comment:
+      'He transformed our brand UI with stunning dark glassmorphic design, smooth scroll physics, and fast Next.js Pages Router performance. Exceptional quality!',
   },
   {
-    id: 't-6',
+    id: 'test-6',
     name: 'Marcus T.',
     role: 'CTO, TechFlow',
     rating: 5,
-    comment: 'Flawless real-time data sync with Firestore and clean RESTful API integration. His expertise in full-stack architecture saved us weeks of development time.',
+    comment:
+      'Flawless real-time data sync with Firestore and clean RESTful API integration. His expertise in full-stack architecture saved us weeks of development time.',
   },
   {
-    id: 't-7',
+    id: 'test-7',
     name: 'Brandon P.',
     role: 'Product Manager, Elevate Apps',
     rating: 5,
-    comment: 'The digital product store and payment workflows he engineered were rock-solid. 100% persistent data even across hard reloads!',
+    comment:
+      'The digital product store and payment workflows he engineered were rock-solid. 100% persistent data even across hard reloads!',
   },
 ];
 

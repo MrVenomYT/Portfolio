@@ -154,8 +154,8 @@ Alongside development, I possess extensive experience in B2B and B2C sales, Link
 
 Additionally, I specialize in Discord.js bot development and quick.db integrations for server automation, moderation, and community engagement. I also work with Lunar Client as an official Hindi Translator, expanding community accessibility across global gaming networks.`,
   availability: 'Available for freelance client work & full-stack contract roles',
-  address: 'Karachi, Pakistan',
-  email: 'esp.hasil.insight@gmail.com',
+  address: 'Lahore, Pakistan',
+  email: 'm.hasil123@gmail.com',
   linkedin: 'https://www.linkedin.com/in/muhammad-hasil/',
   fiverrPro: 'https://pro.fiverr.com/users/venomdesigne613/',
   patreon: 'https://www.patreon.com/MrVenomYT',

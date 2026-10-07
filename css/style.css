@@ -2791,5 +2791,288 @@ body.light .testimonial-quote-icon {
   }
 }
 
+/* =================================================================== */
+/* DYNAMIC D3 PROJECT STATISTICS SECTION
+/* =================================================================== */
+.project-stats-d3-section {
+  position: relative;
+  padding: 70px 0 80px;
+  background: #141414;
+  border-top: 1px solid #1e1e1e;
+  border-bottom: 1px solid #1e1e1e;
+  z-index: 2;
+}
+
+.d3-chart-card {
+  background: #191919;
+  border: 1px solid #252525;
+  border-radius: 16px;
+  padding: 30px 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: all 0.35s ease;
+  position: relative;
+  height: 100%;
+}
+
+.d3-chart-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+.d3-chart-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.d3-chart-title i {
+  color: #72b626;
+}
+
+.d3-chart-subtitle {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 25px;
+}
+
+.d3-donut-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 260px;
+}
+
+.d3-donut-svg {
+  overflow: visible;
+}
+
+.d3-donut-center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.d3-donut-count {
+  font-family: 'Poppins', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.d3-donut-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #888;
+  margin-top: 4px;
+}
+
+/* D3 Legends */
+.d3-legend-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.d3-legend-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #202020;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.d3-legend-item:hover {
+  background: #282828;
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(4px);
+}
+
+.d3-legend-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.d3-legend-color {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.d3-legend-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #ddd;
+}
+
+.d3-legend-val {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* D3 Bars Container */
+.d3-bars-wrapper {
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.d3-bar-group {
+  margin-bottom: 18px;
+}
+
+.d3-bar-group:last-child {
+  margin-bottom: 0;
+}
+
+.d3-bar-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #ddd;
+}
+
+.d3-bar-track {
+  width: 100%;
+  height: 10px;
+  background: #252525;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.d3-bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  width: 0%;
+  transition: width 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+/* D3 Tooltip */
+.d3-chart-tooltip {
+  position: absolute;
+  padding: 8px 14px;
+  background: rgba(17, 17, 17, 0.95);
+  color: #fff;
+  border: 1px solid #72b626;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 999;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+}
+
+/* Dynamic Stat Metric Box */
+.d3-stat-badge-box {
+  background: #191919;
+  border: 1px solid #252525;
+  border-radius: 12px;
+  padding: 18px 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+  height: calc(100% - 15px);
+  margin-bottom: 15px;
+}
+
+.d3-stat-badge-box:hover {
+  transform: translateY(-4px);
+  border-color: #72b626;
+  background: #202020;
+}
+
+.d3-stat-badge-number {
+  font-family: 'Poppins', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.d3-stat-badge-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #888;
+  margin: 0;
+}
+
+/* Light mode for D3 Section */
+body.light .project-stats-d3-section {
+  background: #f4f5f7;
+  border-color: #e5e5e5;
+}
+
+body.light .d3-chart-card {
+  background: #fff;
+  border-color: #e0e0e0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+body.light .d3-chart-title {
+  color: #222;
+}
+
+body.light .d3-donut-count {
+  color: #222;
+}
+
+body.light .d3-legend-item {
+  background: #f8f9fa;
+  border-color: #eee;
+}
+
+body.light .d3-legend-name {
+  color: #333;
+}
+
+body.light .d3-legend-val {
+  color: #111;
+}
+
+body.light .d3-bar-track {
+  background: #e9ecef;
+}
+
+body.light .d3-bar-header {
+  color: #444;
+}
+
+body.light .d3-stat-badge-box {
+  background: #fff;
+  border-color: #e0e0e0;
+}
+
+body.light .d3-stat-badge-number {
+  color: #222;
+}
+
+
 
 

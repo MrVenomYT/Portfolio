@@ -35,8 +35,183 @@
 			var activeSkin = getActiveStyleSheet();
 			if (activeSkin && skinColors[activeSkin]) {
 				document.documentElement.style.setProperty('--skin-color', skinColors[activeSkin]);
+				if (typeof renderD3ProjectStats === "function" && d3StatsAnimated) {
+					renderD3ProjectStats();
+				}
 			}
 		}
+	}
+
+	/* ----------------------------------------------------------- */
+	/*  D3 DYNAMIC PROJECT STATISTICS BREAKDOWN
+	/* ----------------------------------------------------------- */
+	var d3StatsAnimated = false;
+
+	var projectStatsData = [
+		{ name: 'Full-Stack MERN', count: 42, color: '#72b626', icon: 'fa-cubes' },
+		{ name: 'Discord Bots & Automation', count: 28, color: '#5865F2', icon: 'fa-discord' },
+		{ name: 'Frontend SPAs & Dashboards', count: 18, color: '#61DAFB', icon: 'fa-react' },
+		{ name: 'APIs & Backend Services', count: 9, color: '#F7DF1E', icon: 'fa-server' }
+	];
+
+	function renderD3ProjectStats() {
+		if (typeof d3 === 'undefined') return;
+
+		var container = d3.select('#d3DonutContainer');
+		if (container.empty()) return;
+
+		// Clear previous svg
+		container.select('svg').remove();
+
+		var width = 280;
+		var height = 280;
+		var radius = Math.min(width, height) / 2 - 12;
+		var innerRadius = radius - 40;
+
+		// Sync active skin color
+		var activeThemeColor = getComputedStyle(document.documentElement).getPropertyValue('--skin-color').trim() || '#72b626';
+		projectStatsData[0].color = activeThemeColor;
+
+		var svg = container.append('svg')
+			.attr('class', 'd3-donut-svg')
+			.attr('width', width)
+			.attr('height', height)
+			.append('g')
+			.attr('transform', 'translate(' + (width / 2) + ',' + (height / 2) + ')');
+
+		var tooltip = d3.select('body').select('.d3-chart-tooltip');
+		if (tooltip.empty()) {
+			tooltip = d3.select('body').append('div').attr('class', 'd3-chart-tooltip');
+		}
+
+		var pie = d3.pie()
+			.value(function(d) { return d.count; })
+			.sort(null)
+			.padAngle(0.04);
+
+		var arc = d3.arc()
+			.innerRadius(innerRadius)
+			.outerRadius(radius)
+			.cornerRadius(6);
+
+		var arcHover = d3.arc()
+			.innerRadius(innerRadius - 4)
+			.outerRadius(radius + 10)
+			.cornerRadius(8);
+
+		var bgArc = d3.arc()
+			.innerRadius(innerRadius)
+			.outerRadius(radius);
+
+		svg.append('path')
+			.datum({ startAngle: 0, endAngle: 2 * Math.PI })
+			.style('fill', '#222')
+			.attr('d', bgArc);
+
+		var g = svg.selectAll('.d3-arc')
+			.data(pie(projectStatsData))
+			.enter().append('g')
+			.attr('class', 'd3-arc');
+
+		var paths = g.append('path')
+			.attr('fill', function(d) { return d.data.color; })
+			.attr('stroke', '#191919')
+			.attr('stroke-width', '2px')
+			.style('cursor', 'pointer')
+			.style('transition', 'filter 0.3s ease');
+
+		// Smooth Entry Arc Loading Animation
+		paths.transition()
+			.duration(1300)
+			.ease(d3.easeCubicOut)
+			.attrTween('d', function(d) {
+				var interpolate = d3.interpolate({ startAngle: 0, endAngle: 0 }, d);
+				return function(t) {
+					return arc(interpolate(t));
+				};
+			});
+
+		// Slice Hover & Interactivity
+		paths.on('mouseenter', function(event, d) {
+			d3.select(this)
+				.transition().duration(200)
+				.attr('d', arcHover)
+				.style('filter', 'drop-shadow(0 0 14px ' + d.data.color + ')');
+
+			tooltip.style('opacity', '1')
+				.html('<strong>' + d.data.name + '</strong><br>' + d.data.count + ' Projects (' + Math.round((d.data.count / 97) * 100) + '%)')
+				.style('left', (event.pageX + 15) + 'px')
+				.style('top', (event.pageY - 28) + 'px')
+				.style('border-color', d.data.color);
+
+			$('#d3TotalCount').text(d.data.count).css('color', d.data.color);
+		})
+		.on('mousemove', function(event) {
+			tooltip.style('left', (event.pageX + 15) + 'px')
+				.style('top', (event.pageY - 28) + 'px');
+		})
+		.on('mouseleave', function(event, d) {
+			d3.select(this)
+				.transition().duration(200)
+				.attr('d', arc)
+				.style('filter', 'none');
+
+			tooltip.style('opacity', '0');
+			$('#d3TotalCount').text('97').css('color', '#fff');
+		});
+
+		// Build Legends List
+		var legendContainer = $('#d3LegendList').empty();
+		projectStatsData.forEach(function(item, idx) {
+			var pct = Math.round((item.count / 97) * 100);
+			var legendHtml = $(
+				'<div class="d3-legend-item" data-index="' + idx + '">' +
+					'<div class="d3-legend-left">' +
+						'<div class="d3-legend-color" style="background-color: ' + item.color + '"></div>' +
+						'<span class="d3-legend-name">' + item.name + '</span>' +
+					'</div>' +
+					'<span class="d3-legend-val">' + item.count + ' (' + pct + '%)</span>' +
+				'</div>'
+			);
+
+			legendHtml.on('mouseenter', function() {
+				paths.filter(function(d, i) { return i === idx; })
+					.transition().duration(200)
+					.attr('d', arcHover)
+					.style('filter', 'drop-shadow(0 0 14px ' + item.color + ')');
+				$('#d3TotalCount').text(item.count).css('color', item.color);
+			}).on('mouseleave', function() {
+				paths.filter(function(d, i) { return i === idx; })
+					.transition().duration(200)
+					.attr('d', arc)
+					.style('filter', 'none');
+				$('#d3TotalCount').text('97').css('color', '#fff');
+			});
+
+			legendContainer.append(legendHtml);
+		});
+
+		// Animate Horizontal Distribution Bars
+		$('.d3-bar-fill').each(function() {
+			var targetW = $(this).attr('data-d3-width');
+			$(this).css('width', targetW);
+		});
+
+		// Animate Metric Counters
+		$('.d3-count').each(function() {
+			var $this = $(this);
+			var targetVal = parseInt($this.attr('data-val'), 10) || 0;
+			$({ countNum: 0 }).animate({ countNum: targetVal }, {
+				duration: 1400,
+				easing: 'swing',
+				step: function() {
+					$this.text(Math.floor(this.countNum));
+				},
+				complete: function() {
+					$this.text(this.countNum);
+				}
+			});
+		});
 	}
 
 	$(document).ready(function() {
@@ -119,15 +294,18 @@
 		}
 
 		/* ----------------------------------------------------------- */
-		/*  ON-CLICK: SMOOTH SCROLL TO SKILLS
+		/*  ON-CLICK: SMOOTH SCROLL HANDLERS
 		/* ----------------------------------------------------------- */
-		$('.scrollToSkills').on('click', function(e) {
-			e.preventDefault();
-			var target = $('#skills-section');
-			if (target.length) {
-				$('html, body').animate({
-					scrollTop: target.offset().top - 30
-				}, 800);
+		$('.scrollToStats, .scrollToSkills').on('click', function(e) {
+			var href = $(this).attr('href');
+			if (href && href.startsWith('#')) {
+				var target = $(href);
+				if (target.length) {
+					e.preventDefault();
+					$('html, body').animate({
+						scrollTop: target.offset().top - 20
+					}, 800);
+				}
 			}
 		});
 
@@ -231,7 +409,7 @@
 		});
 
 		/* ----------------------------------------------------------- */
-		/*  ON-SCROLL: TRIGGER PROGRESS BARS & NUMERIC COUNTERS
+		/*  ON-SCROLL: TRIGGER D3 CHARTS, PROGRESS BARS & NUMERIC COUNTERS
 		/* ----------------------------------------------------------- */
 		var skillsAnimated = false;
 
@@ -274,9 +452,25 @@
 		}
 
 		if ('IntersectionObserver' in window) {
+			// Observer for D3 Stats Section
+			var statsSection = document.getElementById('project-stats');
+			if (statsSection) {
+				var statsObserver = new IntersectionObserver(function(entries) {
+					entries.forEach(function(entry) {
+						if (entry.isIntersecting && !d3StatsAnimated) {
+							d3StatsAnimated = true;
+							renderD3ProjectStats();
+						}
+					});
+				}, { threshold: 0.1 });
+
+				statsObserver.observe(statsSection);
+			}
+
+			// Observer for Skills Section
 			var skillsSection = document.getElementById('skills-section');
 			if (skillsSection) {
-				var observer = new IntersectionObserver(function(entries) {
+				var skillsObserver = new IntersectionObserver(function(entries) {
 					entries.forEach(function(entry) {
 						if (entry.isIntersecting && !skillsAnimated) {
 							skillsAnimated = true;
@@ -286,16 +480,26 @@
 					});
 				}, { threshold: 0.15 });
 
-				observer.observe(skillsSection);
+				skillsObserver.observe(skillsSection);
 			}
 		} else {
 			// Fallback on scroll
 			$(window).on('scroll', function() {
+				var statsSec = $('#project-stats');
+				if (statsSec.length && !d3StatsAnimated) {
+					var top1 = statsSec.offset().top;
+					var b1 = $(window).scrollTop() + $(window).innerHeight();
+					if (b1 > top1 + 50) {
+						d3StatsAnimated = true;
+						renderD3ProjectStats();
+					}
+				}
+
 				var skillsSec = $('#skills-section');
 				if (skillsSec.length && !skillsAnimated) {
-					var top_of_element = skillsSec.offset().top;
-					var bottom_of_screen = $(window).scrollTop() + $(window).innerHeight();
-					if (bottom_of_screen > top_of_element + 100) {
+					var top2 = skillsSec.offset().top;
+					var b2 = $(window).scrollTop() + $(window).innerHeight();
+					if (b2 > top2 + 100) {
 						skillsAnimated = true;
 						animateProgressBars();
 						animateStatsCounters();
@@ -308,7 +512,7 @@
 		/*  ON-HOVER: 3D TILT EFFECT ON CARDS
 		/* ----------------------------------------------------------- */
 		if ($(window).width() > 768) {
-			$('.tech-badge-card, .skill-progress-card').on('mousemove', function(e) {
+			$('.tech-badge-card, .skill-progress-card, .testimonial-card, .d3-chart-card').on('mousemove', function(e) {
 				var $card = $(this);
 				var rect = this.getBoundingClientRect();
 				var x = e.clientX - rect.left;
@@ -317,8 +521,8 @@
 				var centerX = rect.width / 2;
 				var centerY = rect.height / 2;
 
-				var rotateX = ((y - centerY) / centerY) * -6;
-				var rotateY = ((x - centerX) / centerX) * 6;
+				var rotateX = ((y - centerY) / centerY) * -5;
+				var rotateY = ((x - centerX) / centerX) * 5;
 
 				$card.css({
 					'transform': 'perspective(600px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-4px)',

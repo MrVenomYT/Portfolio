@@ -190,15 +190,166 @@
                 </div>
 
                 <!-- Smooth Scroll Indicator -->
-                <a href="#skills-section" class="scroll-down-hint scrollToSkills">
+                <a href="#project-stats" class="scroll-down-hint scrollToStats">
                     <span class="mouse-icon"><span class="mouse-wheel"></span></span>
-                    <span>Scroll to explore technical skills</span>
+                    <span>Scroll to explore project statistics</span>
                 </a>
             </div>
         </div>
     </div>
 </section>
 <!-- Main Hero Section Ends -->
+
+<!-- Dynamic D3 Project Statistics Section Starts -->
+<section class="project-stats-d3-section revealator-slideup revealator-once" id="project-stats">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="row text-center mb-4">
+            <div class="col-12">
+                <div class="title-section text-left text-sm-center" style="padding: 20px 0 25px;">
+                    <h1>PROJECT <span>STATISTICS</span></h1>
+                    <span class="title-bg">METRICS</span>
+                </div>
+                <div class="skills-badge-header">
+                    <i class="fa-solid fa-chart-pie"></i> Visual Breakdown of Completed Projects & Stack Distribution
+                </div>
+            </div>
+        </div>
+
+        <!-- Top 4 Metric Badges -->
+        <div class="row mb-4">
+            <div class="col-6 col-md-3">
+                <div class="d3-stat-badge-box">
+                    <div class="d3-stat-badge-number" style="color: #72b626;"><span class="d3-count" data-val="42">0</span></div>
+                    <p class="d3-stat-badge-label">Full-Stack MERN</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="d3-stat-badge-box">
+                    <div class="d3-stat-badge-number" style="color: #5865F2;"><span class="d3-count" data-val="28">0</span></div>
+                    <p class="d3-stat-badge-label">Discord Bots</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="d3-stat-badge-box">
+                    <div class="d3-stat-badge-number" style="color: #61DAFB;"><span class="d3-count" data-val="18">0</span></div>
+                    <p class="d3-stat-badge-label">Frontend SPAs</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="d3-stat-badge-box">
+                    <div class="d3-stat-badge-number" style="color: #F7DF1E;"><span class="d3-count" data-val="9">0</span></div>
+                    <p class="d3-stat-badge-label">APIs & Backend</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- D3 Visual Charts Row (Interactive Donut + Stack Distribution Bars) -->
+        <div class="row align-items-stretch">
+            <!-- Left Chart: Interactive D3 Donut Chart -->
+            <div class="col-12 col-lg-6 mb-4">
+                <div class="d3-chart-card">
+                    <h3 class="d3-chart-title">
+                        <i class="fa-solid fa-chart-pie"></i> Project Type Distribution
+                    </h3>
+                    <p class="d3-chart-subtitle">Interactive D3 visual breakdown of 97+ production builds (Hover slices for details)</p>
+                    
+                    <div class="d3-donut-wrapper" id="d3DonutContainer">
+                        <!-- D3 SVG injected here -->
+                        <div class="d3-donut-center-text">
+                            <div class="d3-donut-count" id="d3TotalCount">97</div>
+                            <div class="d3-donut-label">Projects</div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Legends -->
+                    <div class="d3-legend-list" id="d3LegendList">
+                        <!-- Populated dynamically by D3 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Chart: Category Distribution & Performance Velocity -->
+            <div class="col-12 col-lg-6 mb-4">
+                <div class="d3-chart-card">
+                    <h3 class="d3-chart-title">
+                        <i class="fa-solid fa-layer-group"></i> Architecture & Engineering Breakdown
+                    </h3>
+                    <p class="d3-chart-subtitle">Relative completion volume across key domains with smooth loading tracks</p>
+
+                    <div class="d3-bars-wrapper" id="d3BarsContainer">
+                        <!-- Full-Stack MERN -->
+                        <div class="d3-bar-group">
+                            <div class="d3-bar-header">
+                                <span><i class="fa-solid fa-cubes text-success mr-2"></i> Full-Stack MERN (React + Node + Mongo)</span>
+                                <span class="text-white font-weight-bold">42 Projects (43%)</span>
+                            </div>
+                            <div class="d3-bar-track">
+                                <div class="d3-bar-fill" data-d3-width="43.3%" style="background: linear-gradient(90deg, #72b626, #9ee84e);"></div>
+                            </div>
+                        </div>
+
+                        <!-- Discord Bots -->
+                        <div class="d3-bar-group">
+                            <div class="d3-bar-header">
+                                <span><i class="fa-brands fa-discord text-primary mr-2" style="color: #5865F2 !important;"></i> Discord Bots & Automation (Discord.js)</span>
+                                <span class="text-white font-weight-bold">28 Bots (29%)</span>
+                            </div>
+                            <div class="d3-bar-track">
+                                <div class="d3-bar-fill" data-d3-width="28.8%" style="background: linear-gradient(90deg, #5865F2, #8590ff);"></div>
+                            </div>
+                        </div>
+
+                        <!-- Frontend SPAs -->
+                        <div class="d3-bar-group">
+                            <div class="d3-bar-header">
+                                <span><i class="fa-brands fa-react text-info mr-2" style="color: #61DAFB !important;"></i> Frontend Responsive SPAs & Dashboards</span>
+                                <span class="text-white font-weight-bold">18 Web Apps (19%)</span>
+                            </div>
+                            <div class="d3-bar-track">
+                                <div class="d3-bar-fill" data-d3-width="18.6%" style="background: linear-gradient(90deg, #00b4d8, #61DAFB);"></div>
+                            </div>
+                        </div>
+
+                        <!-- REST APIs & Microservices -->
+                        <div class="d3-bar-group">
+                            <div class="d3-bar-header">
+                                <span><i class="fa-solid fa-server text-warning mr-2" style="color: #F7DF1E !important;"></i> RESTful APIs & Cloud Microservices</span>
+                                <span class="text-white font-weight-bold">9 Services (9%)</span>
+                            </div>
+                            <div class="d3-bar-track">
+                                <div class="d3-bar-fill" data-d3-width="9.3%" style="background: linear-gradient(90deg, #e5a00d, #F7DF1E);"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quality & Delivery Highlights -->
+                    <div class="row mt-4 pt-2 border-top border-secondary">
+                        <div class="col-6">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="fa-solid fa-shield-halved text-success font-size-18"></i>
+                                <div>
+                                    <div class="font-weight-bold text-white">100% Secure</div>
+                                    <small class="text-muted">JWT & Role Validation</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="fa-solid fa-bolt text-warning font-size-18"></i>
+                                <div>
+                                    <div class="font-weight-bold text-white">99.9% Uptime</div>
+                                    <small class="text-muted">High-Availability Bots</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Dynamic D3 Project Statistics Section Ends -->
 
 <!-- Technical Skills & MERN Stack Section Starts -->
 <section class="skills-home-section revealator-slideup revealator-once revealator-delay2" id="skills-section">
@@ -629,6 +780,8 @@
 <script src="js/jquery.hoverdir.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.js"></script>
+<!-- D3.js v7 CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script src="js/custom.js"></script>
 
 </body>

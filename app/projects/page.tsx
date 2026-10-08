@@ -57,34 +57,59 @@ export default function ProjectsPage() {
           </p>
         </div>
 
-        {/* Responsive Filter Categories Bar */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-10 sm:mb-12">
+        {/* Responsive Filter Categories Bar with Framer Motion layout animations */}
+        <motion.div
+          layout
+          className="flex flex-wrap items-center justify-center gap-2 mb-10 sm:mb-12"
+        >
           {[
-            { id: 'all', label: `All Projects & Products (${projects.length + products.length})`, icon: Layers },
-            { id: 'fullstack', label: `Full-Stack Apps (${fullstackCount})`, icon: Code2 },
-            { id: 'react', label: `React & MERN (${reactCount})`, icon: Sparkles },
-            { id: 'products', label: `Digital Products (${products.length})`, icon: ShoppingBag },
-            { id: 'uiux', label: `UI/UX & Web (${uiuxCount})`, icon: FolderGit2 },
-            { id: 'bot', label: `Discord Bots (${botCount})`, icon: Terminal },
+            { id: 'all', label: 'All Projects & Products', count: projects.length + products.length, icon: Layers },
+            { id: 'fullstack', label: 'Full-Stack Apps', count: fullstackCount, icon: Code2 },
+            { id: 'react', label: 'React & MERN', count: reactCount, icon: Sparkles },
+            { id: 'products', label: 'Digital Products', count: products.length, icon: ShoppingBag },
+            { id: 'uiux', label: 'UI/UX & Web', count: uiuxCount, icon: FolderGit2 },
+            { id: 'bot', label: 'Discord Bots', count: botCount, icon: Terminal },
           ].map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
             return (
-              <button
+              <motion.button
                 key={item.id}
+                layout
                 onClick={() => setActiveTab(item.id as any)}
-                className={`flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold font-poppins transition-all cursor-pointer ${
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.96 }}
+                transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                className={`relative flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-poppins transition-colors duration-200 cursor-pointer ${
                   isActive
-                    ? 'bg-skin text-white shadow-lg shadow-skin/30 scale-102 font-bold'
-                    : 'bg-[#181818] border border-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-800'
+                    ? 'text-white font-bold'
+                    : 'bg-[#181818] border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700'
                 }`}
               >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{item.label}</span>
-              </button>
+                {isActive && (
+                  <motion.div
+                    layoutId="activeProjectFilterPill"
+                    className="absolute inset-0 rounded-full bg-skin shadow-lg shadow-skin/35"
+                    transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                  />
+                )}
+                <span className="relative z-10 flex items-center gap-2">
+                  <Icon className="w-3.5 h-3.5 shrink-0" />
+                  <span>{item.label}</span>
+                  <span
+                    className={`ml-0.5 px-1.5 py-0.5 text-[10px] rounded-full font-mono transition-colors ${
+                      isActive
+                        ? 'bg-black/25 text-white'
+                        : 'bg-zinc-800 text-zinc-400'
+                    }`}
+                  >
+                    {item.count}
+                  </span>
+                </span>
+              </motion.button>
             );
           })}
-        </div>
+        </motion.div>
 
         <ErrorBoundary fallbackTitle="Projects Grid">
           {/* Framer Motion Grid Container with Fluid Entrance & Exit Animations */}

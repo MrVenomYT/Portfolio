@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback, useTransition } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -23,25 +23,72 @@ import ProjectLifecycleTimeline from '@/components/ProjectLifecycleTimeline';
 import ProjectStatsChart from '@/components/ProjectStatsChart';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
+type FilterCategory = 'all' | 'fullstack' | 'react' | 'products' | 'uiux' | 'vanilla' | 'agency' | 'bot';
+
 export default function ProjectsPage() {
   const { projects, products } = usePortfolio();
-  const [activeTab, setActiveTab] = useState<'all' | 'fullstack' | 'react' | 'products' | 'uiux' | 'vanilla' | 'agency' | 'bot'>('all');
+  const [activeTab, setActiveTab] = useState<FilterCategory>('all');
   const [activeModalProject, setActiveModalProject] = useState<ProjectItem | null>(null);
+  const [isPending, startTransition] = useTransition();
 
-  const fullstackCount = projects.filter((p) => p.category === 'fullstack').length;
-  const reactCount = projects.filter((p) => p.category === 'react' || p.category === 'mern').length;
-  const uiuxCount = projects.filter((p) => p.category === 'uiux' || p.category === 'vanilla').length;
-  const botCount = projects.filter((p) => p.category === 'bot').length;
+  // Optimized single-pass category counts calculation
+  const categoryCounts = useMemo(() => {
+    let fullstack = 0;
+    let react = 0;
+    let uiux = 0;
+    let bot = 0;
 
-  const filteredProjects = projects.filter((p) => {
-    if (activeTab === 'all') return true;
-    if (activeTab === 'products') return false;
-    if (activeTab === 'react') return p.category === 'react' || p.category === 'mern';
-    if (activeTab === 'uiux') return p.category === 'uiux' || p.category === 'vanilla';
-    return p.category === activeTab;
-  });
+    for (let i = 0; i < projects.length; i++) {
+      const cat = projects[i].category;
+      if (cat === 'fullstack') fullstack++;
+      else if (cat === 'react' || cat === 'mern') react++;
+      else if (cat === 'uiux' || cat === 'vanilla') uiux++;
+      else if (cat === 'bot') bot++;
+    }
 
-  const showProducts = activeTab === 'all' || activeTab === 'products';
+    return {
+      all: projects.length + products.length,
+      fullstack,
+      react,
+      products: products.length,
+      uiux,
+      bot,
+    };
+  }, [projects, products.length]);
+
+  // Memoized filter category items
+  const filterCategories = useMemo(() => [
+    { id: 'all' as FilterCategory, label: 'All Projects & Products', count: categoryCounts.all, icon: Layers },
+    { id: 'fullstack' as FilterCategory, label: 'Full-Stack Apps', count: categoryCounts.fullstack, icon: Code2 },
+    { id: 'react' as FilterCategory, label: 'React & MERN', count: categoryCounts.react, icon: Sparkles },
+    { id: 'products' as FilterCategory, label: 'Digital Products', count: categoryCounts.products, icon: ShoppingBag },
+    { id: 'uiux' as FilterCategory, label: 'UI/UX & Web', count: categoryCounts.uiux, icon: FolderGit2 },
+    { id: 'bot' as FilterCategory, label: 'Discord Bots', count: categoryCounts.bot, icon: Terminal },
+  ], [categoryCounts]);
+
+  // Optimized non-blocking state transition handler
+  const handleTabChange = useCallback((tab: FilterCategory) => {
+    startTransition(() => {
+      setActiveTab(tab);
+    });
+  }, []);
+
+  // Memoized filtered project list
+  const filteredProjects = useMemo(() => {
+    if (activeTab === 'all') return projects;
+    if (activeTab === 'products') return [];
+    if (activeTab === 'react') {
+      return projects.filter((p) => p.category === 'react' || p.category === 'mern');
+    }
+    if (activeTab === 'uiux') {
+      return projects.filter((p) => p.category === 'uiux' || p.category === 'vanilla');
+    }
+    return projects.filter((p) => p.category === activeTab);
+  }, [projects, activeTab]);
+
+  const showProducts = useMemo(() => {
+    return activeTab === 'all' || activeTab === 'products';
+  }, [activeTab]);
 
   return (
     <div className="w-full flex flex-col items-center py-10 sm:py-14 px-4 sm:px-6 lg:px-12 min-h-screen">
@@ -62,21 +109,14 @@ export default function ProjectsPage() {
           layout
           className="flex flex-wrap items-center justify-center gap-2 mb-10 sm:mb-12"
         >
-          {[
-            { id: 'all', label: 'All Projects & Products', count: projects.length + products.length, icon: Layers },
-            { id: 'fullstack', label: 'Full-Stack Apps', count: fullstackCount, icon: Code2 },
-            { id: 'react', label: 'React & MERN', count: reactCount, icon: Sparkles },
-            { id: 'products', label: 'Digital Products', count: products.length, icon: ShoppingBag },
-            { id: 'uiux', label: 'UI/UX & Web', count: uiuxCount, icon: FolderGit2 },
-            { id: 'bot', label: 'Discord Bots', count: botCount, icon: Terminal },
-          ].map((item) => {
+          {filterCategories.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
             return (
               <motion.button
                 key={item.id}
                 layout
-                onClick={() => setActiveTab(item.id as any)}
+                onClick={() => handleTabChange(item.id)}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.96 }}
                 transition={{ type: 'spring', stiffness: 450, damping: 30 }}
@@ -96,7 +136,8 @@ export default function ProjectsPage() {
                 <span className="relative z-10 flex items-center gap-2">
                   <Icon className="w-3.5 h-3.5 shrink-0" />
                   <span>{item.label}</span>
-                  <span
+                  <motion.span
+                    layout="position"
                     className={`ml-0.5 px-1.5 py-0.5 text-[10px] rounded-full font-mono transition-colors ${
                       isActive
                         ? 'bg-black/25 text-white'
@@ -104,7 +145,7 @@ export default function ProjectsPage() {
                     }`}
                   >
                     {item.count}
-                  </span>
+                  </motion.span>
                 </span>
               </motion.button>
             );
@@ -112,24 +153,31 @@ export default function ProjectsPage() {
         </motion.div>
 
         <ErrorBoundary fallbackTitle="Projects Grid">
-          {/* Framer Motion Grid Container with Fluid Entrance & Exit Animations */}
-          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
-            <AnimatePresence mode="popLayout">
+          {/* Framer Motion Grid Container with Fluid Entrance, Reorder & Exit Animations */}
+          <motion.div
+            layout
+            transition={{
+              duration: 0.35,
+              ease: [0.25, 0.1, 0.25, 1],
+            }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16"
+          >
+            <AnimatePresence mode="popLayout" initial={false}>
               {filteredProjects.map((project, index) => {
                 const projectTechs = project.techs || (project as any).tags || [];
                 return (
                   <motion.div
                     key={project.id}
                     layout
-                    initial={{ opacity: 0, y: 24, scale: 0.96 }}
+                    initial={{ opacity: 0, y: 20, scale: 0.94 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.92, transition: { duration: 0.2 } }}
+                    exit={{ opacity: 0, scale: 0.9, y: -20, transition: { duration: 0.2 } }}
                     transition={{
-                      duration: 0.35,
-                      delay: Math.min(index * 0.04, 0.25),
-                      ease: [0.25, 0.1, 0.25, 1],
+                      layout: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] },
+                      opacity: { duration: 0.25 },
+                      scale: { duration: 0.25 },
                     }}
-                    whileHover={{ y: -6 }}
+                    whileHover={{ y: -6, transition: { duration: 0.2 } }}
                     className="bg-[#181818] border border-zinc-800/90 hover:border-skin/70 rounded-3xl overflow-hidden shadow-xl flex flex-col justify-between group cursor-pointer"
                     onClick={() => setActiveModalProject(project)}
                   >
@@ -251,70 +299,93 @@ export default function ProjectsPage() {
                   </motion.div>
                 );
               })}
+
+              {filteredProjects.length === 0 && !showProducts && (
+                <motion.div
+                  key="empty-projects-state"
+                  layout
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.3 }}
+                  className="col-span-full py-16 text-center text-zinc-400"
+                >
+                  <p className="text-sm font-sans">No projects found in this category.</p>
+                </motion.div>
+              )}
             </AnimatePresence>
           </motion.div>
         </ErrorBoundary>
 
         {/* Digital Products Section (Merged) */}
-        {showProducts && (
-          <div className="mt-12 pt-12 border-t border-zinc-800">
-            <div className="text-center mb-10">
-              <span className="px-3 py-1 rounded-full text-[10px] font-bold font-poppins uppercase bg-skin/10 text-skin border border-skin/20">
-                PROD & READY-TO-DEPLOY
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-bold font-poppins text-white uppercase mt-2">
-                DIGITAL PRODUCTS & <span className="text-skin">STARTERS</span>
-              </h2>
-              <p className="text-xs sm:text-sm text-zinc-400 font-sans mt-1 max-w-xl mx-auto">
-                Production Next.js / MERN Boilerplates, Custom Discord Bots, and UI Kits built for instant deployment.
-              </p>
-            </div>
+        <AnimatePresence>
+          {showProducts && (
+            <motion.div
+              layout
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20, transition: { duration: 0.25 } }}
+              transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+              className="mt-12 pt-12 border-t border-zinc-800"
+            >
+              <div className="text-center mb-10">
+                <span className="px-3 py-1 rounded-full text-[10px] font-bold font-poppins uppercase bg-skin/10 text-skin border border-skin/20">
+                  PROD & READY-TO-DEPLOY
+                </span>
+                <h2 className="text-2xl sm:text-4xl font-bold font-poppins text-white uppercase mt-2">
+                  DIGITAL PRODUCTS & <span className="text-skin">STARTERS</span>
+                </h2>
+                <p className="text-xs sm:text-sm text-zinc-400 font-sans mt-1 max-w-xl mx-auto">
+                  Production Next.js / MERN Boilerplates, Custom Discord Bots, and UI Kits built for instant deployment.
+                </p>
+              </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {products.map((prod) => (
-                <div
-                  key={prod.id}
-                  className="bg-[#181818] border border-zinc-800 hover:border-skin/60 rounded-3xl p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="px-3 py-1 rounded-lg bg-skin/10 text-skin text-[10px] font-bold uppercase font-poppins">
-                        {prod.category}
-                      </span>
-                      <span className="text-sm font-black font-poppins text-white bg-zinc-800 px-3 py-1 rounded-xl">
-                        {prod.price}
-                      </span>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {products.map((prod) => (
+                  <div
+                    key={prod.id}
+                    className="bg-[#181818] border border-zinc-800 hover:border-skin/60 rounded-3xl p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="px-3 py-1 rounded-lg bg-skin/10 text-skin text-[10px] font-bold uppercase font-poppins">
+                          {prod.category}
+                        </span>
+                        <span className="text-sm font-black font-poppins text-white bg-zinc-800 px-3 py-1 rounded-xl">
+                          {prod.price}
+                        </span>
+                      </div>
+
+                      <h3 className="text-lg font-bold font-poppins text-white mb-2">{prod.title}</h3>
+                      <p className="text-xs text-zinc-400 font-sans leading-relaxed mb-4">
+                        {prod.description}
+                      </p>
+
+                      <ul className="space-y-1.5 mb-6">
+                        {prod.features.slice(0, 3).map((feat, idx) => (
+                          <li key={idx} className="flex items-center gap-2 text-xs text-zinc-300 font-sans">
+                            <Check className="w-3.5 h-3.5 text-skin shrink-0" />
+                            <span>{feat}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
 
-                    <h3 className="text-lg font-bold font-poppins text-white mb-2">{prod.title}</h3>
-                    <p className="text-xs text-zinc-400 font-sans leading-relaxed mb-4">
-                      {prod.description}
-                    </p>
-
-                    <ul className="space-y-1.5 mb-6">
-                      {prod.features.slice(0, 3).map((feat, idx) => (
-                        <li key={idx} className="flex items-center gap-2 text-xs text-zinc-300 font-sans">
-                          <Check className="w-3.5 h-3.5 text-skin shrink-0" />
-                          <span>{feat}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    <a
+                      href={prod.demoUrl || '#'}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-full py-3 rounded-2xl bg-zinc-800 hover:bg-skin hover:text-white text-zinc-300 text-xs font-bold font-poppins uppercase tracking-wider text-center transition-colors flex items-center justify-center gap-2"
+                    >
+                      <span>View Product Demo</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
                   </div>
-
-                  <a
-                    href={prod.demoUrl || '#'}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="w-full py-3 rounded-2xl bg-zinc-800 hover:bg-skin hover:text-white text-zinc-300 text-xs font-bold font-poppins uppercase tracking-wider text-center transition-colors flex items-center justify-center gap-2"
-                  >
-                    <span>View Product Demo</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Modal for Deep Project Inspection & Recharts Visual Stats */}
         <AnimatePresence>

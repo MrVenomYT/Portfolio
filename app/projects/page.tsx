@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useCallback, useTransition } from 'react';
+import React, { useState, useMemo, useCallback, useTransition, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -21,15 +21,66 @@ import { usePortfolio } from '@/lib/portfolioContext';
 import { ProjectItem } from '@/lib/portfolioData';
 import ProjectLifecycleTimeline from '@/components/ProjectLifecycleTimeline';
 import ProjectStatsChart from '@/components/ProjectStatsChart';
+import ProjectsGridSkeleton from '@/components/ProjectsGridSkeleton';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 type FilterCategory = 'all' | 'fullstack' | 'react' | 'products' | 'uiux' | 'vanilla' | 'agency' | 'bot';
+
+// Framer Motion variants for stagger-in entrance animation
+const projectGridContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.04,
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      staggerChildren: 0.04,
+      staggerDirection: -1,
+      duration: 0.2,
+    },
+  },
+};
+
+const projectCardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 28,
+    scale: 0.94,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: 'spring',
+      stiffness: 260,
+      damping: 24,
+      mass: 0.8,
+    },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.92,
+    y: -16,
+    transition: {
+      duration: 0.2,
+      ease: 'easeOut',
+    },
+  },
+};
 
 export default function ProjectsPage() {
   const { projects, products } = usePortfolio();
   const [activeTab, setActiveTab] = useState<FilterCategory>('all');
   const [activeModalProject, setActiveModalProject] = useState<ProjectItem | null>(null);
+  const [isFiltering, setIsFiltering] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const filterTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Optimized single-pass category counts calculation
   const categoryCounts = useMemo(() => {
@@ -66,11 +117,28 @@ export default function ProjectsPage() {
     { id: 'bot' as FilterCategory, label: 'Discord Bots', count: categoryCounts.bot, icon: Terminal },
   ], [categoryCounts]);
 
-  // Optimized non-blocking state transition handler
+  // Optimized non-blocking state transition handler with visual feedback timer
   const handleTabChange = useCallback((tab: FilterCategory) => {
+    if (tab === activeTab) return;
+    if (filterTimerRef.current) {
+      clearTimeout(filterTimerRef.current);
+    }
+    setIsFiltering(true);
     startTransition(() => {
       setActiveTab(tab);
+      filterTimerRef.current = setTimeout(() => {
+        setIsFiltering(false);
+        filterTimerRef.current = null;
+      }, 240);
     });
+  }, [activeTab]);
+
+  useEffect(() => {
+    return () => {
+      if (filterTimerRef.current) {
+        clearTimeout(filterTimerRef.current);
+      }
+    };
   }, []);
 
   // Memoized filtered project list
@@ -153,34 +221,34 @@ export default function ProjectsPage() {
         </motion.div>
 
         <ErrorBoundary fallbackTitle="Projects Grid">
-          {/* Framer Motion Grid Container with Fluid Entrance, Reorder & Exit Animations */}
-          <motion.div
-            layout
-            transition={{
-              duration: 0.35,
-              ease: [0.25, 0.1, 0.25, 1],
-            }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16"
-          >
-            <AnimatePresence mode="popLayout" initial={false}>
-              {filteredProjects.map((project, index) => {
-                const projectTechs = project.techs || (project as any).tags || [];
-                return (
-                  <motion.div
-                    key={project.id}
-                    layout
-                    initial={{ opacity: 0, y: 20, scale: 0.94 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9, y: -20, transition: { duration: 0.2 } }}
-                    transition={{
-                      layout: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] },
-                      opacity: { duration: 0.25 },
-                      scale: { duration: 0.25 },
-                    }}
-                    whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                    className="bg-[#181818] border border-zinc-800/90 hover:border-skin/70 rounded-3xl overflow-hidden shadow-xl flex flex-col justify-between group cursor-pointer"
-                    onClick={() => setActiveModalProject(project)}
-                  >
+          <AnimatePresence mode="wait">
+            {isFiltering ? (
+              <ProjectsGridSkeleton
+                key="projects-skeleton"
+                count={Math.min(filteredProjects.length || 6, 6)}
+              />
+            ) : (
+              <motion.div
+                key={`projects-grid-${activeTab}`}
+                variants={projectGridContainerVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                layout
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16"
+              >
+                <AnimatePresence mode="popLayout" initial={false}>
+                  {filteredProjects.map((project) => {
+                    const projectTechs = project.techs || (project as any).tags || [];
+                    return (
+                      <motion.div
+                        key={project.id}
+                        variants={projectCardVariants}
+                        layout
+                        whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                        className="bg-[#181818] border border-zinc-800/90 hover:border-skin/70 rounded-3xl overflow-hidden shadow-xl flex flex-col justify-between group cursor-pointer"
+                        onClick={() => setActiveModalProject(project)}
+                      >
                     <div>
                       {/* Image Container with Preview Overlay */}
                       <div className="relative w-full aspect-[16/10] bg-zinc-900 overflow-hidden">
@@ -303,11 +371,8 @@ export default function ProjectsPage() {
               {filteredProjects.length === 0 && !showProducts && (
                 <motion.div
                   key="empty-projects-state"
+                  variants={projectCardVariants}
                   layout
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.3 }}
                   className="col-span-full py-16 text-center text-zinc-400"
                 >
                   <p className="text-sm font-sans">No projects found in this category.</p>
@@ -315,7 +380,9 @@ export default function ProjectsPage() {
               )}
             </AnimatePresence>
           </motion.div>
-        </ErrorBoundary>
+        )}
+      </AnimatePresence>
+    </ErrorBoundary>
 
         {/* Digital Products Section (Merged) */}
         <AnimatePresence>

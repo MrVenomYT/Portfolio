@@ -3,69 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Calendar, User, Tag, ArrowRight, Search, BookOpen, Clock } from 'lucide-react';
-
-const blogPosts = [
-  {
-    id: 'mern-architecture-2026',
-    title: 'Architecting Scalable MERN Stack Applications for Production in 2026',
-    excerpt: 'Deep-dive into clean controller patterns, MongoDB schema indexing strategies, JWT refresh token rotation, and Next.js App Router hybrid rendering.',
-    category: 'Full-Stack',
-    date: 'Oct 04, 2026',
-    readTime: '6 min read',
-    image: '/img/blog/blog-post-1.jpg',
-    tags: ['React', 'Node.js', 'MongoDB', 'Architecture'],
-  },
-  {
-    id: 'discord-bot-sharding',
-    title: 'Scaling Discord.js v14 Bots: Gateway Sharding, FFmpeg Audio, and WebSockets',
-    excerpt: 'How to build high-concurrency Discord bots with low-memory footprint, thread-safe voice connections, slash command autocompletion, and WebSockets.',
-    category: 'Bot Dev',
-    date: 'Sep 28, 2026',
-    readTime: '8 min read',
-    image: '/img/blog/blog-post-2.jpg',
-    tags: ['Discord.js', 'WebSockets', 'Node.js', 'Automation'],
-  },
-  {
-    id: 'nextjs-performance-tuning',
-    title: 'Optimizing Next.js Web App Core Web Vitals to Reach Perfect 100 Scores',
-    excerpt: 'Actionable techniques for reducing Total Blocking Time (TBT), dynamic asset streaming, responsive image decoding, and caching strategies on Vercel Edge.',
-    category: 'Frontend',
-    date: 'Sep 15, 2026',
-    readTime: '5 min read',
-    image: '/img/blog/blog-post-3.jpg',
-    tags: ['Next.js', 'Performance', 'Lighthouse', 'Vercel'],
-  },
-  {
-    id: 'python-scraping-pipelines',
-    title: 'Building Resilient Automated Web Scraping & Data Extraction Pipelines in Python',
-    excerpt: 'Handling dynamic JavaScript SPAs with BeautifulSoup, header spoofing, proxy rotation, and syncing ingested data into MongoDB with automated cron jobs.',
-    category: 'Python',
-    date: 'Aug 29, 2026',
-    readTime: '7 min read',
-    image: '/img/blog/blog-post-4.jpg',
-    tags: ['Python', 'BeautifulSoup', 'MongoDB', 'Automation'],
-  },
-  {
-    id: 'rest-api-security-guide',
-    title: 'Defensive REST API Security: Rate Limiting, CORS, and Sanitizing Injection Vectors',
-    excerpt: 'Comprehensive blueprint for locking down Express & Node.js backends against NoSQL injections, CSRF attacks, and API key exposure in production.',
-    category: 'Security',
-    date: 'Aug 14, 2026',
-    readTime: '9 min read',
-    image: '/img/blog/blog-post-5.jpg',
-    tags: ['Security', 'Express', 'JWT', 'DevOps'],
-  },
-  {
-    id: 'd3-charts-react-integration',
-    title: 'Crafting Interactive D3.js Radar & Bar Charts Inside React & Next.js Components',
-    excerpt: 'A seamless guide on combining D3 mathematical scales and SVG curves with React component state lifecycles and Tailwind CSS theming.',
-    category: 'Data Viz',
-    date: 'Jul 30, 2026',
-    readTime: '5 min read',
-    image: '/img/blog/blog-post-6.jpg',
-    tags: ['D3.js', 'React', 'SVG', 'Frontend'],
-  },
-];
+import { blogPostsData } from '@/lib/blogPosts';
 
 export default function BlogPage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -73,7 +11,7 @@ export default function BlogPage() {
 
   const categories = ['All', 'Full-Stack', 'Bot Dev', 'Frontend', 'Python', 'Security', 'Data Viz'];
 
-  const filteredPosts = blogPosts.filter((post) => {
+  const filteredPosts = blogPostsData.filter((post) => {
     const matchesSearch =
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
@@ -88,7 +26,7 @@ export default function BlogPage() {
         <div className="text-center mb-12 relative">
           <div className="title-bg">POSTS</div>
           <h1 className="text-4xl sm:text-5xl font-black font-poppins text-white uppercase relative z-10">
-            MY <span>BLOG</span>
+            MY <span className="text-skin">BLOG</span>
           </h1>
           <p className="text-xs sm:text-sm text-zinc-400 font-sans mt-2 relative z-10">
             Articles & Case Studies on MERN Stack, Discord Bot Engineering & Web Performance
@@ -134,7 +72,7 @@ export default function BlogPage() {
               key={post.id}
               className="bg-[#181818] border border-zinc-800 rounded-2xl overflow-hidden shadow-xl hover:border-skin transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1.5"
             >
-              <div>
+              <Link href={`/blog/${post.id}`}>
                 {/* Post Cover Image */}
                 <div className="relative w-full h-48 bg-zinc-900 overflow-hidden">
                   <img
@@ -183,17 +121,17 @@ export default function BlogPage() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </Link>
 
               {/* Read Action */}
               <div className="p-5 pt-0">
-                <button
-                  onClick={() => alert(`Article '${post.title}' is available in full dev notes.`)}
+                <Link
+                  href={`/blog/${post.id}`}
                   className="w-full py-2.5 px-4 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-xs font-semibold text-skin flex items-center justify-center gap-2 group-hover:bg-skin group-hover:text-white transition-all"
                 >
                   <span>READ FULL ARTICLE</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                </Link>
               </div>
             </article>
           ))}

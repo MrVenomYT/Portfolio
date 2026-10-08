@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
             subject: subject || 'New Inquiry from Portfolio Website',
             message: message,
             to_name: 'Muhammad Hasil',
-            to_email: 'esp.hasil.insight@gmail.com',
+            to_email: 'm.hasil123@gmail.com',
           },
         };
 
